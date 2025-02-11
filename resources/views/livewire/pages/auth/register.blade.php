@@ -87,7 +87,7 @@ new #[Layout('layouts.guest')] class extends Component {
 
         @if($step === 1)
             <form wire:submit.prevent="verifyOrganization"
-                  class="mt-8 space-y-6 bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-xl">
+                  class="mt-8 space-y-6 bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-xl">
                 <!-- Organization Selection -->
                 <div>
                     <x-input-label for="organization" :value="__('Organization')"/>
@@ -127,7 +127,7 @@ new #[Layout('layouts.guest')] class extends Component {
 
         @if($step === 2)
             <form wire:submit.prevent="register"
-                  class="mt-8 space-y-6 bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-xl">
+                  class="mt-8 space-y-6 bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-xl">
                 <!-- Name -->
                 <div>
                     <x-input-label for="name" :value="__('Name')"/>

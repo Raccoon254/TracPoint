@@ -37,7 +37,7 @@ new #[Layout('layouts.guest')] class extends Component
             </p>
         </div>
 
-        <form wire:submit="login" class="mt-8 space-y-6 bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-xl">
+        <form wire:submit="login" class="mt-8 space-y-6 bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-xl">
             <!-- Email Address -->
             <div>
                 <x-input-label for="email" :value="__('Email')" />
