@@ -15,8 +15,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Organization::factory(10)->create();
-        Department::factory(50)->create();
-        User::factory(10)->create();
+        Organization::factory(5)->create();
+        //get all organizations
+        $organizations = Organization::all();
+        $organizations->each(function ($organization) {
+            Department::factory(5)->create(['organization_id' => $organization->id]);
+        });
+        User::factory(50)->create();
     }
 }

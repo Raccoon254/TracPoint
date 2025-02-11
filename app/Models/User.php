@@ -25,6 +25,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',           // enum: super_admin, admin, auditor, user
+        'organization_id',
         'department_id',
         'position',
         'employee_id',

@@ -176,7 +176,7 @@
     <!-- Loading State -->
     <div wire:loading.flex class="fixed inset-0 bg-black bg-opacity-25 items-center justify-center z-50">
         <div class="bg-white p-4 rounded-lg shadow-lg">
-            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-500 mx-auto"></div>
+            <i data-lucide="loader-circle" class="text-4xl text-emerald-600 animate-spin"></i>
             <p class="text-gray-500 mt-2">Loading...</p>
         </div>
     </div>

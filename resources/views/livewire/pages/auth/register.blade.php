@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Livewire\Attributes\Layout;
 use Livewire\Volt\Component;
+use Illuminate\Database\Eloquent\Collection;
 
 new #[Layout('layouts.guest')] class extends Component {
     // Determines which step of the registration flow to show (1 = organization, 2 = user info)
@@ -22,7 +23,7 @@ new #[Layout('layouts.guest')] class extends Component {
     public string $email = '';
     public string $password = '';
     public string $password_confirmation = '';
-    public $organizations;
+    public Collection $organizations;
 
     public function mount(): void
     {
@@ -35,12 +36,14 @@ new #[Layout('layouts.guest')] class extends Component {
     public function verifyOrganization(): void
     {
         $this->validate([
-            'organization_id' => ['required', 'exists:organizations,id'],
-            'verification_code' => ['required', 'string'],
+            'organization_id'    => ['required', 'exists:organizations,id'],
+            'verification_code'  => ['required', 'string'],
         ]);
 
-
         $organization = Organization::find($this->organization_id);
+
+        // Store organization ID from the database (ensuring proper type and valid value)
+        $this->organization_id = $organization->id;
 
         if ($organization->verification_code !== $this->verification_code) {
             $this->addError('verification_code', 'The verification code is incorrect.');
@@ -56,18 +59,35 @@ new #[Layout('layouts.guest')] class extends Component {
      */
     public function register(): void
     {
-        $this->validate([
-            'name'                  => ['required', 'string', 'max:255'],
-            'email'                 => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'password'              => ['required', 'string', 'confirmed', Rules\Password::defaults()],
+        // Basic validation for user input
+        $validatedData = $this->validate([
+            'name'           => ['required', 'string', 'max:255'],
+            'email'          => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'password'       => ['required', 'string', 'confirmed', Rules\Password::defaults()],
+            'organization_id'=> ['required', 'exists:organizations,id'],
         ]);
 
+        // Fetch and verify the organization record from the database.
+        $organization = Organization::find($this->organization_id);
+        if (!$organization) {
+            $this->addError('organization_id', 'Invalid organization selected.');
+            return;
+        }
+
+        // Optional additional check:
+        // For example, if the organization requires a specific email domain, you could do:
+        // if (isset($organization->email_domain) && !str_ends_with($this->email, '@' . $organization->email_domain)) {
+        //     $this->addError('email', 'Your email must be from the ' . $organization->email_domain . ' domain.');
+        //     return;
+        // }
+
+        // Create the user record with the validated data and the verified organization ID.
         $user = User::create([
             'name'            => $this->name,
             'email'           => $this->email,
             'password'        => Hash::make($this->password),
             'role'            => 'admin',
-            'organization_id' => $this->organization_id,
+            'organization_id' => $organization->id,
         ]);
 
         event(new Registered($user));
@@ -76,13 +96,20 @@ new #[Layout('layouts.guest')] class extends Component {
 
         $this->redirect(route('dashboard', absolute: false), navigate: true);
     }
-}; ?>
+};
+
+?>
 
 <div>
     <div class="w-full max-w-md space-y-8 mb-8 relative z-10">
         <div class="text-center">
             <h2 class="text-4xl font-bold tracking-tight text-gray-900 mb-2">Create an account</h2>
             <p class="text-lg text-gray-600">Sign up to get started</p>
+            @if($step === 1)
+                <p class="text-sm text-gray-500 mt-2">Select your organization and enter the verification code provided by your organization.</p>
+            @else
+                <p class="text-sm text-gray-500 mt-2">Selected organization: {{ $organizations->find($organization_id)->name }}</p>
+            @endif
         </div>
 
         @if($step === 1)
@@ -128,6 +155,9 @@ new #[Layout('layouts.guest')] class extends Component {
         @if($step === 2)
             <form wire:submit.prevent="register"
                   class="mt-8 space-y-6 bg-white/80 backdrop-blur-sm p-6 rounded-2xl shadow-xl">
+                <!-- Hidden field for organization_id -->
+                <input type="hidden" wire:model="organization_id">
+
                 <!-- Name -->
                 <div>
                     <x-input-label for="name" :value="__('Name')"/>
@@ -191,13 +221,14 @@ new #[Layout('layouts.guest')] class extends Component {
                         Back
                     </button>
                     <x-primary-button class="ms-3">
-                    <span wire:loading wire:target="register" class="flex items-center justify-center h-5 w-5">
-                        <i data-lucide="loader-circle" class="w-5 h-5 animate-spin"></i>
-                    </span>
+                <span wire:loading wire:target="register" class="flex items-center justify-center h-5 w-5">
+                    <i data-lucide="loader-circle" class="w-5 h-5 animate-spin"></i>
+                </span>
                         <span wire:loading.remove wire:target="register">{{ __('Register') }}</span>
                     </x-primary-button>
                 </div>
             </form>
         @endif
+
     </div>
 </div>

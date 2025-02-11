@@ -37,6 +37,7 @@ class AdminDashboard extends Component
             ->orderBy('name')
             ->get(['id', 'name'])
             ->toArray();
+        //dd($this->departments, $this->user);
     }
 
     public function updatedSelectedDepartment(): void
@@ -155,6 +156,7 @@ class AdminDashboard extends Component
 
     public function refreshData(): void
     {
+        sleep(10); // Simulate a long-running process
         $this->calculateStats();
         $this->loadRecentActivities();
         $this->loadMaintenanceAlerts();

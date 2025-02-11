@@ -60,18 +60,19 @@ class UserFactory extends Factory
     public function configure(): static
     {
         return $this->afterCreating(function (User $user) {
+            $allOrganizations = Organization::all();
+            $allDepartments = Department::all();
+
             // If the user does not have an organization, create one.
             if (empty($user->organization_id)) {
-                $organization = Organization::factory()->create();
+                $organization = $allOrganizations->random();
                 $user->organization()->associate($organization);
                 $user->save();
             }
 
             // If the user does not have a department, create one that belongs to the user's organization.
             if (empty($user->department_id) && !empty($user->organization_id)) {
-                $department = Department::factory()->create([
-                    'organization_id' => $user->organization_id,
-                ]);
+                $department = $allDepartments->where('organization_id', $user->organization_id)->random();
                 $user->department()->associate($department);
                 $user->save();
             }
