@@ -107,6 +107,8 @@
             transition: all 0.3s ease;
             filter: grayscale(100%);
             opacity: 0.7;
+            width: 70px;
+            cursor: pointer;
         }
 
         .tech-stack-icon:hover {
@@ -196,11 +198,11 @@
         </div>
 
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Feature Cards with hover effects and animations -->
-            <div class="feature-card bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-xl">
+            <!-- Smart Tracking -->
+            <div class="feature-card bg-white/40 backdrop-blur-sm p-8 rounded-2xl shadow-sm">
                 <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-6">
                     <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2m2 4v-1m-8-4H4m8 4v-1m-4-8v-1m0 12v-1m4-8v-1m4 8h2m-2-4h2m-6-4h2m-10 4h2m6-8v1m-4-4v1m-6 0h2m2 0h2m2 0h2m2 0h2"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
                     </svg>
                 </div>
                 <h3 class="text-2xl font-bold text-gray-900 mb-4">Smart Tracking</h3>
@@ -208,27 +210,62 @@
                     AI-powered asset tracking with predictive maintenance alerts and real-time location updates.
                 </p>
             </div>
-            <!-- Add more feature cards... -->
-        </div>
-    </section>
 
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="py-20 bg-gradient-to-b from-emerald-50 to-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold text-center mb-16">What Our Customers Say</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Testimonial cards with hover effects -->
-                <div class="testimonial-card bg-white p-8 rounded-2xl shadow-lg">
-                    <div class="flex items-center mb-4">
-                        <img src="/api/placeholder/40/40" alt="User" class="rounded-full" />
-                        <div class="ml-4">
-                            <h4 class="font-semibold">John Doe</h4>
-                            <p class="text-gray-600">IT Manager</p>
-                        </div>
-                    </div>
-                    <p class="text-gray-700">"TrackPoint has revolutionized how we manage our IT assets. The automation features save us countless hours."</p>
+            <!-- Barcode Integration -->
+            <div class="feature-card bg-white/40 backdrop-blur-sm p-8 rounded-2xl shadow-sm">
+                <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-emerald-600"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/></svg>
                 </div>
-                <!-- Add more testimonials... -->
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Barcode Integration</h3>
+                <p class="text-gray-600">
+                    Seamless barcode scanning and generation with mobile app support for quick asset identification.
+                </p>
+            </div>
+
+            <!-- Audit Management -->
+            <div class="feature-card bg-white/40 backdrop-blur-sm p-8 rounded-2xl shadow-sm">
+                <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-emerald-600"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Audit Management</h3>
+                <p class="text-gray-600">
+                    Comprehensive audit trails with photo documentation and compliance reporting features.
+                </p>
+            </div>
+
+            <!-- Maintenance Scheduling -->
+            <div class="feature-card bg-white/40 backdrop-blur-sm p-8 rounded-2xl shadow-sm">
+                <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-6">
+                    <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Maintenance Scheduling</h3>
+                <p class="text-gray-600">
+                    Automated maintenance scheduling with smart notifications and service history tracking.
+                </p>
+            </div>
+
+            <!-- Department Management -->
+            <div class="feature-card bg-white/40 backdrop-blur-sm p-8 rounded-2xl shadow-sm">
+                <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-emerald-600"><path d="M12.034 12.681a.498.498 0 0 1 .647-.647l9 3.5a.5.5 0 0 1-.033.943l-3.444 1.068a1 1 0 0 0-.66.66l-1.067 3.443a.5.5 0 0 1-.943.033z"/><path d="M5 3a2 2 0 0 0-2 2"/><path d="M19 3a2 2 0 0 1 2 2"/><path d="M5 21a2 2 0 0 1-2-2"/><path d="M9 3h1"/><path d="M9 21h2"/><path d="M14 3h1"/><path d="M3 9v1"/><path d="M21 9v2"/><path d="M3 14v1"/></svg>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Department Management</h3>
+                <p class="text-gray-600">
+                    Hierarchical department structure with role-based access control and asset allocation.
+                </p>
+            </div>
+
+            <!-- Analytics Dashboard -->
+            <div class="feature-card bg-white/40 backdrop-blur-sm p-8 rounded-2xl shadow-sm">
+                <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-emerald-600"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-4">Analytics Dashboard</h3>
+                <p class="text-gray-600">
+                    Advanced analytics with customizable reports and real-time asset utilization insights.
+                </p>
             </div>
         </div>
     </section>
@@ -237,12 +274,21 @@
     <section class="py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-4xl font-bold text-center mb-16">Built with Modern Technology</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 items-center justify-items-center">
+            <div class="grid grid-cols-3 md:grid-cols-6 gap-8 items-center justify-items-center">
                 <!-- Tech stack icons with hover effects -->
-                <img src="/api/placeholder/80/80" alt="Laravel" class="tech-stack-icon" />
-                <img src="/api/placeholder/80/80" alt="Vue.js" class="tech-stack-icon" />
-                <img src="/api/placeholder/80/80" alt="Tailwind CSS" class="tech-stack-icon" />
-                <img src="/api/placeholder/80/80" alt="Alpine.js" class="tech-stack-icon" />
+
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg"
+                        alt="Laravel" class="tech-stack-icon" />
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/livewire/livewire-original.svg" alt="Livewire" class="tech-stack-icon" />
+
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind CSS" class="tech-stack-icon" />
+
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/alpinejs/alpinejs-original.svg" alt="Alpine.js" class="tech-stack-icon" />
+
+
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" alt="GitHub" class="tech-stack-icon" />
+
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS" class="tech-stack-icon" />
             </div>
         </div>
     </section>
