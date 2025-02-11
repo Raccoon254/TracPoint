@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="overflow-x-hidden" lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>TrackPoint - Modern Asset Management by kenTom</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
+    <!-- GSAP and Particles -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
@@ -41,6 +42,13 @@
             animation: blob 15s infinite;
         }
 
+        /* On mobile, disable heavy blob animations */
+        @media (max-width: 768px) {
+            .animate-blob {
+                animation: none;
+            }
+        }
+
         .btn-gradient {
             background: linear-gradient(45deg, #059669, #0d9488);
             color: white;
@@ -68,8 +76,10 @@
             animation: shimmer 3s infinite;
         }
 
+        /* Limit transitions to only what’s needed */
         .feature-card {
-            transition: all 0.5s;
+            transition: transform 0.5s, box-shadow 0.5s;
+            will-change: transform, opacity;
             cursor: pointer;
         }
 
@@ -118,7 +128,7 @@
         }
     </style>
 </head>
-<body class="min-h-screen bg-gradient-to-b from-gray-50 to-white flex flex-col relative">
+<body class="min-h-screen bg-gradient-to-b overflow-x-hidden from-gray-50 to-white flex flex-col relative">
 <div id="particles-js"></div>
 
 @include('layouts.navigation')
@@ -198,7 +208,12 @@
             <!-- Barcode Integration -->
             <div class="feature-card bg-white/40 backdrop-blur-sm p-8 rounded-2xl shadow-sm">
                 <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-6">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-emerald-600"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-emerald-600">
+                        <path d="M3 7V5a2 2 0 0 1 2-2h2"/>
+                        <path d="M17 3h2a2 2 0 0 1 2 2v2"/>
+                        <path d="M21 17v2a2 2 0 0 1-2 2h-2"/>
+                        <path d="M7 21H5a2 2 0 0 1-2-2v-2"/>
+                    </svg>
                 </div>
                 <h3 class="text-2xl font-bold text-gray-900 mb-4">Barcode Integration</h3>
                 <p class="text-gray-600">
@@ -209,7 +224,10 @@
             <!-- Audit Management -->
             <div class="feature-card bg-white/40 backdrop-blur-sm p-8 rounded-2xl shadow-sm">
                 <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-6">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-emerald-600"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-emerald-600">
+                        <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+                        <path d="m9 12 2 2 4-4"/>
+                    </svg>
                 </div>
                 <h3 class="text-2xl font-bold text-gray-900 mb-4">Audit Management</h3>
                 <p class="text-gray-600">
@@ -233,7 +251,18 @@
             <!-- Department Management -->
             <div class="feature-card bg-white/40 backdrop-blur-sm p-8 rounded-2xl shadow-sm">
                 <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-6">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-emerald-600"><path d="M12.034 12.681a.498.498 0 0 1 .647-.647l9 3.5a.5.5 0 0 1-.033.943l-3.444 1.068a1 1 0 0 0-.66.66l-1.067 3.443a.5.5 0 0 1-.943.033z"/><path d="M5 3a2 2 0 0 0-2 2"/><path d="M19 3a2 2 0 0 1 2 2"/><path d="M5 21a2 2 0 0 1-2-2"/><path d="M9 3h1"/><path d="M9 21h2"/><path d="M14 3h1"/><path d="M3 9v1"/><path d="M21 9v2"/><path d="M3 14v1"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-emerald-600">
+                        <path d="M12.034 12.681a.498.498 0 0 1 .647-.647l9 3.5a.5.5 0 0 1-.033.943l-3.444 1.068a1 1 0 0 0-.66.66l-1.067 3.443a.5.5 0 0 1-.943.033z"/>
+                        <path d="M5 3a2 2 0 0 0-2 2"/>
+                        <path d="M19 3a2 2 0 0 1 2 2"/>
+                        <path d="M5 21a2 2 0 0 1-2-2"/>
+                        <path d="M9 3h1"/>
+                        <path d="M9 21h2"/>
+                        <path d="M14 3h1"/>
+                        <path d="M3 9v1"/>
+                        <path d="M21 9v2"/>
+                        <path d="M3 14v1"/>
+                    </svg>
                 </div>
                 <h3 class="text-2xl font-bold text-gray-900 mb-4">Department Management</h3>
                 <p class="text-gray-600">
@@ -244,7 +273,10 @@
             <!-- Analytics Dashboard -->
             <div class="feature-card bg-white/40 backdrop-blur-sm p-8 rounded-2xl shadow-sm">
                 <div class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mb-6">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-emerald-600"><path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 text-emerald-600">
+                        <path d="M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z"/>
+                        <path d="M21.21 15.89A10 10 0 1 1 8 2.83"/>
+                    </svg>
                 </div>
                 <h3 class="text-2xl font-bold text-gray-900 mb-4">Analytics Dashboard</h3>
                 <p class="text-gray-600">
@@ -260,16 +292,11 @@
             <h2 class="text-4xl font-bold text-center mb-16">Built with Modern Technology</h2>
             <div class="grid grid-cols-3 md:grid-cols-6 gap-8 items-center justify-items-center">
                 <!-- Tech stack icons with hover effects -->
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg"
-                        alt="Laravel" class="tech-stack-icon" />
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg" alt="Laravel" class="tech-stack-icon" />
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/livewire/livewire-original.svg" alt="Livewire" class="tech-stack-icon" />
-
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind CSS" class="tech-stack-icon" />
-
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/alpinejs/alpinejs-original.svg" alt="Alpine.js" class="tech-stack-icon" />
-
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" alt="GitHub" class="tech-stack-icon" />
-
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS" class="tech-stack-icon" />
             </div>
         </div>
@@ -279,10 +306,14 @@
 @include('layouts.footer')
 
 <script>
-    // Initialize particles.js
+    // Determine if the user is on a mobile device (adjust breakpoint as needed)
+    const isMobile = window.innerWidth < 768;
+
+    // Adjust particle count based on device – fewer particles for mobile
+    const particleCount = isMobile ? 10 : 80;
     particlesJS('particles-js', {
         particles: {
-            number: { value: 80, density: { enable: true, value_area: 800 } },
+            number: { value: particleCount, density: { enable: true, value_area: 800 } },
             color: { value: '#10b981' },
             shape: { type: 'circle' },
             opacity: { value: 0.5, random: false },
@@ -305,108 +336,121 @@
         retina_detect: true
     });
 
-    // GSAP Animations
-    gsap.registerPlugin(ScrollTrigger);
+    // Only run GSAP animations if NOT on mobile
+    if (!isMobile) {
+        gsap.registerPlugin(ScrollTrigger);
 
-    // Hero section animations
-    gsap.from("#hero-title", {
-        opacity: 0,
-        y: 50,
-        duration: 1,
-        delay: 0.5
-    });
+        // Use fixed delays/durations for desktop
+        const heroDelay = 0.5;
+        const featureDelayFactor = 0.2;
+        const counterDuration = 2000;
 
-    gsap.from("#hero-subtitle", {
-        opacity: 0,
-        y: 30,
-        duration: 1,
-        delay: 0.8
-    });
-
-    gsap.from("#hero-cta", {
-        opacity: 0,
-        y: 30,
-        duration: 1,
-        delay: 1.1
-    });
-
-    // Feature cards animation
-    gsap.utils.toArray('.feature-card').forEach((card, i) => {
-        gsap.from(card, {
-            scrollTrigger: {
-                trigger: card,
-                start: "top bottom-=100",
-                toggleActions: "play none none reverse"
-            },
+        // Hero section animations
+        gsap.from("#hero-title", {
             opacity: 0,
             y: 50,
-            duration: 0.6,
-            delay: i * 0.2
+            duration: 1,
+            delay: heroDelay
         });
-    });
 
-    // Stats counter animation
-    function animateValue(element, start, end, duration) {
-        let startTimestamp = null;
-        const step = (timestamp) => {
-            if (!startTimestamp) startTimestamp = timestamp;
-            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-            const value = Math.floor(progress * (end - start) + start);
-            element.textContent = value.toLocaleString();
-            if (progress < 1) {
-                window.requestAnimationFrame(step);
-            }
-        };
-        window.requestAnimationFrame(step);
+        gsap.from("#hero-subtitle", {
+            opacity: 0,
+            y: 30,
+            duration: 1,
+            delay: heroDelay + 0.3
+        });
+
+        gsap.from("#hero-cta", {
+            opacity: 0,
+            y: 30,
+            duration: 1,
+            delay: heroDelay + 0.6
+        });
+
+        // Feature cards animation
+        gsap.utils.toArray('.feature-card').forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top bottom-=100",
+                    toggleActions: "play none none reverse"
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.6,
+                delay: i * featureDelayFactor
+            });
+        });
+
+        // Stats counter animation
+        function animateValue(element, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const value = Math.floor(progress * (end - start) + start);
+                element.textContent = value.toLocaleString();
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // Trigger stats animation when in view
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const target = parseInt(counter.getAttribute('data-target'));
+                    animateValue(counter, 0, target, counterDuration);
+                    statsObserver.unobserve(counter);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.stats-counter').forEach(counter => {
+            statsObserver.observe(counter);
+        });
+
+        // Testimonial cards animation
+        gsap.utils.toArray('.testimonial-card').forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top bottom-=50",
+                    toggleActions: "play none none reverse"
+                },
+                opacity: 0,
+                x: i % 2 === 0 ? -50 : 50,
+                duration: 0.8,
+                delay: i * featureDelayFactor
+            });
+        });
+
+        // Tech stack icons animation
+        gsap.utils.toArray('.tech-stack-icon').forEach((icon, i) => {
+            gsap.from(icon, {
+                scrollTrigger: {
+                    trigger: icon,
+                    start: "top bottom-=50",
+                    toggleActions: "play none none reverse"
+                },
+                opacity: 0,
+                scale: 0.5,
+                duration: 0.5,
+                delay: i * 0.1
+            });
+        });
+    }else {
+        // Fast forward stats counter for mobile
+        document.querySelectorAll('.stats-counter').forEach(counter => {
+            const target = parseInt(counter.getAttribute('data-target'));
+            counter.textContent = target.toLocaleString();
+        });
     }
 
-    // Trigger stats animation when in view
-    const statsObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const counter = entry.target;
-                const target = parseInt(counter.getAttribute('data-target'));
-                animateValue(counter, 0, target, 2000);
-                statsObserver.unobserve(counter);
-            }
-        });
-    }, { threshold: 0.5 });
-
-    document.querySelectorAll('.stats-counter').forEach(counter => {
-        statsObserver.observe(counter);
-    });
-
-    // Testimonial cards animation
-    gsap.utils.toArray('.testimonial-card').forEach((card, i) => {
-        gsap.from(card, {
-            scrollTrigger: {
-                trigger: card,
-                start: "top bottom-=50",
-                toggleActions: "play none none reverse"
-            },
-            opacity: 0,
-            x: i % 2 === 0 ? -50 : 50,
-            duration: 0.8,
-            delay: i * 0.2
-        });
-    });
-
-    // Tech stack icons animation
-    gsap.utils.toArray('.tech-stack-icon').forEach((icon, i) => {
-        gsap.from(icon, {
-            scrollTrigger: {
-                trigger: icon,
-                start: "top bottom-=50",
-                toggleActions: "play none none reverse"
-            },
-            opacity: 0,
-            scale: 0.5,
-            duration: 0.5,
-            delay: i * 0.1
-        });
-    });
-
-    // Smooth scroll for navigation links
+    // Smooth scroll for navigation links (works on all devices)
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -420,18 +464,15 @@
         });
     });
 
-    // Navbar scroll effect
+    // Navbar scroll effect (works on all devices)
     const navbar = document.querySelector('nav');
     let lastScroll = 0;
-
     window.addEventListener('scroll', () => {
         const currentScroll = window.pageYOffset;
-
         if (currentScroll <= 0) {
             navbar.classList.remove('shadow-lg');
             return;
         }
-
         if (currentScroll > lastScroll) {
             // Scrolling down
             navbar.classList.add('shadow-lg');
@@ -439,7 +480,6 @@
             // Scrolling up
             navbar.classList.remove('shadow-lg');
         }
-
         lastScroll = currentScroll;
     });
 </script>
