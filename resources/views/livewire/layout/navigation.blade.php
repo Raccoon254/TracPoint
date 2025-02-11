@@ -37,7 +37,7 @@ new class extends Component
                     </x-nav-link>
 
                     <!-- Assets Dropdown -->
-                    <div class="relative" x-data="{ open: false }">
+                    <div class="relative inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 transition duration-150 ease-in-out" x-data="{ open: false }">
                         <button @click="open = !open" @click.away="open = false"
                                 class="inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 transition duration-150 ease-in-out">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -54,7 +54,7 @@ new class extends Component
                              x-transition:leave="transition ease-in duration-75"
                              x-transition:leave-start="transform opacity-100 scale-100"
                              x-transition:leave-end="transform opacity-0 scale-95"
-                             class="absolute left-0 w-48 mt-2 py-2 bg-white rounded-md shadow-lg z-50">
+                             class="absolute top-16 left-0 w-48 mt-2 py-2 bg-white rounded-md shadow-lg z-50">
                             <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View All Assets</a>
                             <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Add New Asset</a>
                             <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Categories</a>

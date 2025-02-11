@@ -34,7 +34,7 @@
             @endif
 
             <!-- Page Content -->
-            <main>
+            <main class="mt-10 flex-grow">
                 {{ $slot }}
             </main>
         </div>
