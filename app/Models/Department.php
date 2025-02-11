@@ -24,6 +24,11 @@ class Department extends Model
     ];
 
     // Relationships
+    // A department belongs to an organization.
+    public function organization(): BelongsTo
+    {
+        return $this->belongsTo(Organization::class);
+    }
 
     // A department has many users.
     public function users(): HasMany

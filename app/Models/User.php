@@ -55,6 +55,12 @@ class User extends Authenticatable
         ];
     }
 
+    // A user belongs to an organization.
+    public function organization(): BelongsTo
+    {
+        return $this->belongsTo(Organization::class);
+    }
+
     // A user belongs to a department.
     public function department(): BelongsTo
     {

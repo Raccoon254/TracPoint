@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('organization_id')->nullable();
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
@@ -28,6 +29,7 @@ return new class extends Migration
 
             // Foreign key: ensure the referenced department exists.
             $table->foreign('department_id')->references('id')->on('departments')->onDelete('set null');
+            $table->foreign('organization_id')->references('id')->on('organizations')->onDelete('set null');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
