@@ -29,6 +29,7 @@ class Asset extends Model
         'condition',             // enum: new, good, fair, poor
         'is_mobile',
         'current_department_id',
+        'organization_id',
         'current_location',
         'assigned_to',
         'assigned_date',
@@ -81,5 +82,11 @@ class Asset extends Model
     public function maintenanceRecords(): HasMany
     {
         return $this->hasMany(MaintenanceRecord::class);
+    }
+
+    // An asset belongs to an organization.
+    public function organization(): BelongsTo
+    {
+        return $this->belongsTo(Organization::class);
     }
 }

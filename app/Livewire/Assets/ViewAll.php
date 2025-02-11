@@ -93,12 +93,20 @@ class ViewAll extends Component
 
     public function render(): View
     {
+        $user = auth()->user();
+
         return view('livewire.assets.view-all', [
-            'assets' =>  Asset::query()
+            'assets' => Asset::query()
                 ->when($this->search, function ($query, $search) {
                     $query->where(function ($q) use ($search) {
                         $q->where('name', 'like', '%' . $search . '%')
                             ->orWhere('asset_code', 'like', '%' . $search . '%');
+                    });
+                })
+                // If the user is not a super admin, filter assets by the user's organization
+                ->when($user->role !== 'super_admin', function ($query) use ($user) {
+                    $query->whereHas('category', function ($q) use ($user) {
+                        $q->where('organization_id', $user->organization_id);
                     });
                 })
                 ->orderBy($this->sortField, $this->sortDirection)
