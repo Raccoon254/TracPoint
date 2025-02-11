@@ -2,6 +2,7 @@
 
 use App\Livewire\Assets\Create;
 use App\Livewire\Assets\EditAsset;
+use App\Livewire\Assets\IndexPage;
 use App\Livewire\Assets\Show;
 use App\Livewire\Assets\ViewAll;
 use App\Livewire\Dashboards\MainDashboard;
@@ -33,5 +34,9 @@ Route::get('assets/{asset}', Show::class)
 Route::get('assets/{asset}/edit', EditAsset::class)
     ->middleware(['auth', 'verified'])
     ->name('assets.edit');
+
+Route::get('assets', IndexPage::class)
+    ->middleware(['auth', 'verified'])
+    ->name('assets.browse');
 
 require __DIR__.'/auth.php';
