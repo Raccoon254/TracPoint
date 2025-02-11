@@ -90,10 +90,11 @@
         <div class="bg-white rounded-lg shadow-sm p-6">
             <h3 class="text-lg font-semibold text-gray-900 mb-4">Asset Utilization</h3>
             <div class="h-64">
+                @php
+                    $totalAssets = array_sum($stats['asset_utilization']);
+                @endphp
+                @if($totalAssets > 0)
                 <div class="grid grid-cols-4 gap-4 h-full">
-                    @php
-                        $totalAssets = array_sum($stats['asset_utilization']);
-                    @endphp
                     @foreach($stats['asset_utilization'] as $status => $count)
                         <div class="flex flex-col">
                             <div class="flex-1 bg-emerald-50 rounded-t-lg relative">
@@ -111,6 +112,13 @@
                         </div>
                     @endforeach
                 </div>
+                @else
+                    @include('partials.empty', [
+                        'title'  => 'No Asset Utilization Data',
+                        'icon'   => 'exclamation-circle',
+                        'message'=> 'There is currently no asset utilization data to display.'
+                    ])
+                @endif
             </div>
         </div>
 
@@ -136,7 +144,11 @@
                     </div>
                 @empty
                     <div class="text-center text-gray-500 py-4">
-                        No maintenance alerts at this time
+                        @include('partials.empty', [
+                            'title'  => 'No maintenance alerts',
+                            'icon'   => 'exclamation-circle',
+                            'message'=> 'There are currently no maintenance alerts to display.'
+                        ])
                     </div>
                 @endforelse
             </div>
@@ -167,16 +179,20 @@
                 </div>
             @empty
                 <div class="text-center text-gray-500 py-4">
-                    No recent activities
+                    @include('partials.empty', [
+                        'title'  => 'No recent activities',
+                        'icon'   => 'exclamation-circle',
+                        'message'=> 'There are currently no recent activities to display.'
+                    ])
                 </div>
             @endforelse
         </div>
     </div>
 
     <!-- Loading State -->
-    <div wire:loading.flex class="fixed inset-0 bg-black bg-opacity-25 items-center justify-center z-50">
-        <div class="bg-white p-4 rounded-lg shadow-lg">
-            <i data-lucide="loader-circle" class="text-4xl text-emerald-600 animate-spin"></i>
+    <div wire:loading.flex class="fixed inset-0 -top-10 bg-black bg-opacity-25 items-center justify-center z-50">
+        <div class="p-4 center flex-col">
+            <i data-lucide="loader-circle" class="text-4xl h-10 w-10 text-emerald-600 animate-spin"></i>
             <p class="text-gray-500 mt-2">Loading...</p>
         </div>
     </div>
