@@ -38,12 +38,5 @@
                 {{ $slot }}
             </main>
         </div>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script>
-        //load page
-        document.addEventListener('DOMContentLoaded', function() {
-            lucide.loadIcons()
-        })
-    </script>
     </body>
 </html>

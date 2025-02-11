@@ -28,13 +28,5 @@
         {{ $slot }}
     </div>
 </div>
-<script src="https://unpkg.com/lucide@latest"></script>
-<script>
-    //load page
-    document.addEventListener('DOMContentLoaded', function() {
-        let icons = lucide
-        console.log(icons)
-    })
-</script>
 </body>
 </html>

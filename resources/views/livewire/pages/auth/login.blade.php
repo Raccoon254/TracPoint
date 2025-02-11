@@ -99,17 +99,15 @@ new #[Layout('layouts.guest')] class extends Component
                 @endif
 
                 <x-primary-button class="ms-3 w-24 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 focus:ring-2 focus:ring-emerald-500/20 transition-all duration-300">
-{{--                    loading state
---}}
                     <span wire:loading wire:target="login" class="flex items-center justify-center h-5 w-5">
-                          <i data-lucide="loader-circle"></i>
+                          <i data-lucide="loader-circle" class="w-5 h-5 animate-spin"></i>
                     </span>
                     <span wire:loading.remove wire:target="login">{{ __('Log in') }}</span>
                 </x-primary-button>
             </div>
 
             <div class="text-center text-sm">
-                <span class="text-gray-600">Don't have an account?</span>{' '}
+                <span class="text-gray-600">Don't have an account?</span>
                 <a
                     href="{{ route('register') }}"
                     class="font-medium text-emerald-600 hover:text-emerald-500 transition-colors"
