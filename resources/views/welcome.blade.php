@@ -135,7 +135,7 @@
 
 <main class="content-wrapper">
     <!-- Hero Section -->
-    <section class="relative z-50 pt-56 pb-44 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section class="relative z-50 pt-32 md:pt-56 pb-44 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div class="text-center space-y-8 relative z-50">
             <div class="absolute inset-0 -z-10">
                 <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-teal-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>

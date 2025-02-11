@@ -5,10 +5,12 @@ namespace App\Livewire\Assets;
 use App\Models\Asset;
 use App\Models\AssetCategory;
 use App\Models\Department;
+use App\Models\User;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
+use function Pest\Laravel\get;
 
 class ViewAll extends Component
 {
@@ -43,8 +45,9 @@ class ViewAll extends Component
 
     public function mount(): void
     {
-        $this->categories = AssetCategory::all();
-        $this->departments = Department::all();
+        $user = auth()->user();
+        $this->categories = $this->getCategoryList($user);
+        $this->departments = $this->getDepartmentList($user);
     }
 
     public function updatingSearch(): void
@@ -102,5 +105,21 @@ class ViewAll extends Component
                 ->with(['category', 'department', 'assignedUser'])
                 ->paginate(10),
         ]);
+    }
+
+    /**
+     * Get the list of departments that belong to the user's organization.
+     */
+    private function getDepartmentList(User $user)
+    {
+        return Department::where('organization_id', $user->organization_id)->get();
+    }
+
+    /**
+     * Get the list of asset categories that belong to the user's organization.
+     */
+    private function getCategoryList(User $user)
+    {
+        return AssetCategory::where('organization_id', $user->organization_id)->get();
     }
 }
