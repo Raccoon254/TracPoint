@@ -13,7 +13,20 @@ return new class extends Migration
     {
         Schema::create('audits', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('asset_id');
+            $table->unsignedBigInteger('auditor_id');
+            $table->dateTime('audit_date')->nullable();
+            $table->string('previous_condition')->nullable();
+            $table->string('new_condition')->nullable();
+            $table->boolean('location_verified')->default(false);
+            $table->text('notes')->nullable();
+            $table->json('images')->nullable();
+            $table->text('discrepancies')->nullable();
+            $table->text('action_taken')->nullable();
             $table->timestamps();
+
+            $table->foreign('asset_id')->references('id')->on('assets')->onDelete('cascade');
+            $table->foreign('auditor_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

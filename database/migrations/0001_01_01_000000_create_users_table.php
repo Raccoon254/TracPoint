@@ -17,8 +17,17 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->enum('role', ['super_admin', 'admin', 'auditor', 'user']);
+            $table->unsignedBigInteger('department_id')->nullable();
+            $table->string('position')->nullable();
+            $table->string('employee_id')->nullable();
+            $table->string('phone')->nullable();
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->rememberToken();
             $table->timestamps();
+
+            // Foreign key: ensure the referenced department exists.
+            $table->foreign('department_id')->references('id')->on('departments')->onDelete('set null');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

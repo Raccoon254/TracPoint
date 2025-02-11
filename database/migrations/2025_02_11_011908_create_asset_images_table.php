@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('asset_images', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('asset_id');
+            $table->string('image_path');
+            $table->enum('image_type', ['primary', 'additional']);
+            $table->text('description')->nullable();
             $table->timestamps();
+
+            $table->foreign('asset_id')->references('id')->on('assets')->onDelete('cascade');
         });
     }
 
