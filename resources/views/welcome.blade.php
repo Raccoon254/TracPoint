@@ -121,27 +121,11 @@
 <body class="min-h-screen bg-gradient-to-b from-gray-50 to-white flex flex-col relative">
 <div id="particles-js"></div>
 
-<!-- Navigation -->
-<nav class="fixed w-full z-50 bg-white/80 backdrop-blur-lg shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16 items-center">
-            <div class="flex items-center">
-                <span class="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">TrackPoint</span>
-            </div>
-            <div class="hidden md:flex items-center space-x-8">
-                <a href="#features" class="text-gray-600 hover:text-emerald-600 transition-colors">Features</a>
-                <a href="#testimonials" class="text-gray-600 hover:text-emerald-600 transition-colors">Testimonials</a>
-                <a href="#pricing" class="text-gray-600 hover:text-emerald-600 transition-colors">Pricing</a>
-                <a href="/login" class="text-emerald-600 font-semibold">Login</a>
-                <a href="/register" class="btn-gradient px-6 py-2">Get Started</a>
-            </div>
-        </div>
-    </div>
-</nav>
+@include('layouts.navigation')
 
 <main class="content-wrapper">
     <!-- Hero Section -->
-    <section class="relative z-50 pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section class="relative z-50 pt-56 pb-44 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div class="text-center space-y-8 relative z-50">
             <div class="absolute inset-0 -z-10">
                 <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-teal-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
@@ -157,8 +141,8 @@
                 Modern asset management solution with full lifecycle tracking, barcode integration,
                 and real-time auditing capabilities. A kenTom project.
             </p>
-            <div class="flex gap-4 justify-center opacity-0" id="hero-cta">
-                <a href="/register" class="btn-gradient px-8 py-4 text-lg">
+            <div class="flex gap-4 justify-center opacity-1" id="hero-cta">
+                <a href="/register" class="btn-gradient px-8 center py-4 text-lg">
                     Get Started Free
                 </a>
                 <a href="#features" class="px-8 py-4 text-lg font-semibold text-emerald-600 hover:text-emerald-500 transition-colors">
@@ -172,15 +156,15 @@
     <section class="py-20 bg-emerald-50/50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                <div class="stats-card bg-white p-8 rounded-2xl shadow-lg">
+                <div class="feature-card bg-white/40 backdrop-blur-sm p-8 rounded-2xl shadow-sm">
                     <div class="text-4xl font-bold text-emerald-600 stats-counter" data-target="1000">0</div>
                     <p class="text-gray-600 mt-2">Active Users</p>
                 </div>
-                <div class="stats-card bg-white p-8 rounded-2xl shadow-lg">
+                <div class="feature-card bg-white/40 backdrop-blur-sm p-8 rounded-2xl shadow-sm">
                     <div class="text-4xl font-bold text-emerald-600 stats-counter" data-target="50000">0</div>
                     <p class="text-gray-600 mt-2">Assets Tracked</p>
                 </div>
-                <div class="stats-card bg-white p-8 rounded-2xl shadow-lg">
+                <div class="feature-card bg-white/40 backdrop-blur-sm p-8 rounded-2xl shadow-sm">
                     <div class="text-4xl font-bold text-emerald-600 stats-counter" data-target="99">0</div>
                     <p class="text-gray-600 mt-2">Customer Satisfaction</p>
                 </div>
@@ -276,7 +260,6 @@
             <h2 class="text-4xl font-bold text-center mb-16">Built with Modern Technology</h2>
             <div class="grid grid-cols-3 md:grid-cols-6 gap-8 items-center justify-items-center">
                 <!-- Tech stack icons with hover effects -->
-
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/laravel/laravel-original.svg"
                         alt="Laravel" class="tech-stack-icon" />
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/livewire/livewire-original.svg" alt="Livewire" class="tech-stack-icon" />
@@ -284,7 +267,6 @@
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind CSS" class="tech-stack-icon" />
 
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/alpinejs/alpinejs-original.svg" alt="Alpine.js" class="tech-stack-icon" />
-
 
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" alt="GitHub" class="tech-stack-icon" />
 

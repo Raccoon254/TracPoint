@@ -123,3 +123,9 @@ body {
         @apply px-3 py-2 text-sm;
     }
 }
+
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
