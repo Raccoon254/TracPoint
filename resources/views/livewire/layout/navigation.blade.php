@@ -55,8 +55,8 @@ new class extends Component
                              x-transition:leave-start="transform opacity-100 scale-100"
                              x-transition:leave-end="transform opacity-0 scale-95"
                              class="absolute top-16 left-0 w-48 mt-2 py-2 bg-white rounded-md shadow-lg z-50">
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View All Assets</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Add New Asset</a>
+                            <a href="{{route('assets.index')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">View All Assets</a>
+                            <a href="{{route('assets.create')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Add New Asset</a>
                             <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Categories</a>
                             <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Maintenance</a>
                         </div>
