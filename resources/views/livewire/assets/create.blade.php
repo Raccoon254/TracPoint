@@ -176,12 +176,7 @@
                             class="text-gray-600 hover:text-gray-500">
                         Previous
                     </button>
-                    <x-primary-button wire:click="save">
-                        <span wire:loading wire:target="save" class="flex items-center justify-center h-5 w-5">
-                            <i data-lucide="loader-circle" class="w-5 h-5 animate-spin"></i>
-                        </span>
-                        <span wire:loading.remove wire:target="save">Create Asset</span>
-                    </x-primary-button>
+                    <x-primary-button wire:click="nextStep">Next</x-primary-button>
                 </div>
 
                 <!-- Preview Images -->
