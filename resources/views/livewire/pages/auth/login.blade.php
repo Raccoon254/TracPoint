@@ -15,8 +15,6 @@ new #[Layout('layouts.guest')] class extends Component
     public function login(): void
     {
         $this->validate();
-        //sleep for 10 seconds to simulate a slow request
-        sleep(10);
 
         $this->form->authenticate();
 
