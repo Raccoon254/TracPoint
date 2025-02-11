@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('asset_categories', function (Blueprint $table) {
             // Add organization_id after the id column.
-            $table->unsignedBigInteger('organization_id')->after('id');
+            $table->unsignedBigInteger('organization_id')->nullable()->after('id');
 
             // Add a foreign key constraint referencing the organizations table.
             $table->foreign('organization_id')

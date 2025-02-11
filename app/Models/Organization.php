@@ -33,4 +33,10 @@ class Organization extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    // An organization has many asset categories.
+    public function assetCategories(): HasMany
+    {
+        return $this->hasMany(AssetCategory::class);
+    }
 }

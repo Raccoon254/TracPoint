@@ -20,6 +20,7 @@ class AssetCategory extends Model
         'depreciation_rate',
         'requires_maintenance',
         'maintenance_frequency',
+        'organization_id',
     ];
 
     protected $casts = [
@@ -45,5 +46,11 @@ class AssetCategory extends Model
     public function children(): HasMany
     {
         return $this->hasMany(AssetCategory::class, 'parent_id');
+    }
+
+    // A category belongs to an organization.
+    public function organization(): BelongsTo
+    {
+        return $this->belongsTo(Organization::class);
     }
 }
