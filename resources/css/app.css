@@ -1,3 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* Custom Fonts */
+@font-face {
+    font-family: 'Figtree';
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: url('https://fonts.gstatic.com/s/figtree/v1/wlpxgwjJjpPnUqFtZt7k2w.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Figtree';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('https://fonts.gstatic.com/s/figtree/v1/wlpxgwjJjpPnUqFtZt7k2w.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Figtree';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('https://fonts.gstatic.com/s/figtree/v1/wlpxgwjJjpPnUqFtZt7k2w.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Figtree';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('https://fonts.gstatic.com/s/figtree/v1/wlpxgwjJjpPnUqFtZt7k2w.woff2') format('woff2');
+}
+
+body {
+    font-family: 'Figtree', sans-serif !important;
+}
+
+/* Custom Animations */
+@keyframes blob {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+    }
+    25% {
+        transform: translate(20px, -20px) scale(1.1);
+    }
+    50% {
+        transform: translate(-20px, 20px) scale(0.9);
+    }
+    75% {
+        transform: translate(-20px, -20px) scale(1.05);
+    }
+}
+
+/* Apply Blob Animation */
+.animate-blob {
+    animation: blob 10s infinite ease-in-out;
+}
+
+.animation-delay-2000 {
+    animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+    animation-delay: 4s;
+}
+
+/* Background Gradient */
+.bg-gradient-auth {
+    background: linear-gradient(to bottom, rgba(249, 250, 251, 1), rgba(255, 255, 255, 1));
+}
+
+/* Input Styles */
+.input-auth {
+    @apply mt-1 block w-full rounded-xl border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-colors;
+}
+
+/* Button Styles */
+.btn-gradient {
+    @apply relative flex w-full justify-center rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 px-4 py-3 text-sm font-semibold text-white hover:from-emerald-500 hover:to-teal-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-300;
+}
+
+.btn-gradient:hover {
+    @apply from-emerald-500 to-teal-500;
+}
+
+/* Blurred Background for Forms */
+.backdrop-blur-auth {
+    @apply bg-white/80 backdrop-blur-sm;
+}
+
+/* Checkbox Styles */
+.checkbox-auth {
+    @apply h-4 w-4 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500 transition-colors;
+}
+
+/* Link Styles */
+.link-auth {
+    @apply font-medium text-emerald-600 hover:text-emerald-500 transition-colors;
+}
+
+/* Loading Spinner */
+.spinner {
+    @apply animate-spin -ml-1 mr-3 h-5 w-5 text-white;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 640px) {
+    .bg-gradient-auth {
+        background: linear-gradient(to bottom, rgba(249, 250, 251, 1), rgba(255, 255, 255, 1));
+    }
+
+    .input-auth {
+        @apply px-3 py-2;
+    }
+
+    .btn-gradient {
+        @apply px-3 py-2 text-sm;
+    }
+}
