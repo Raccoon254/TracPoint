@@ -15,7 +15,7 @@
     </head>
     <body class="font-sans antialiased">
 
-    <div class="min-h-screen bg-gradient-to-b from-gray-50 to-white flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div class="min-h-screen bg-gradient-to-b from-gray-50 to-white flex flex-col relative overflow-hidden">
         <!-- Background Elements -->
         <div class="absolute inset-0 overflow-hidden">
             <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-teal-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
