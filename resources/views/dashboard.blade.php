@@ -267,7 +267,8 @@ new class extends Component {
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                         @if(in_array($user->role, ['super_admin', 'admin']))
-                            <a href="#" class="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+                            <a href="{{route('assets.create')}}"
+                               class="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
                                 <svg class="h-6 w-6 text-emerald-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
                                 </svg>
