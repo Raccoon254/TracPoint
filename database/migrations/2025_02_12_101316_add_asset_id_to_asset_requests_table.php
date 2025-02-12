@@ -12,7 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('asset_requests', function (Blueprint $table) {
-            //
+            $table->unsignedBigInteger('asset_id')->after('id');
+
+            $table->foreign('asset_id')
+                ->references('id')
+                ->on('assets')
+                ->onDelete('cascade');
         });
     }
 
@@ -22,7 +27,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('asset_requests', function (Blueprint $table) {
-            //
+            $table->dropForeign(['asset_id']);
+            $table->dropColumn('asset_id');
         });
     }
 };

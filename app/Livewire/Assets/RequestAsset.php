@@ -87,6 +87,7 @@ class RequestAsset extends Component
             'notes' => $this->notes,
             'status' => 'pending',
             'organization_id' => auth()->user()->organization_id,
+            'asset_id' => $this->asset->id,
         ]);
 
         $this->reset(['purpose', 'quantity', 'priority', 'notes']);
