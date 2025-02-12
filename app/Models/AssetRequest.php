@@ -25,6 +25,7 @@ class AssetRequest extends Model
         'required_until',
         'notes',
         'organization_id',
+        'asset_id',
     ];
 
     protected $casts = [
