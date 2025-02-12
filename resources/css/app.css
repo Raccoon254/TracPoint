@@ -129,3 +129,40 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+/* Style only this paginator */
+.relative.z-0.inline-flex {
+    background-color: white;
+    border-radius: 6px;
+}
+
+/* Default button styles */
+.relative.inline-flex {
+    background-color: white;
+    border: 1px solid rgba(209, 213, 219, 0.36); /* Gray-300 */
+    color: rgba(75, 85, 99, 0.8); /* Gray-700 */
+}
+
+/* Active button (current page) */
+span[aria-current="page"] > .relative.inline-flex {
+    background-color: rgba(243, 244, 246, 0.75); /* Gray-100 */
+    color: #13161b; /* Gray-800 */
+}
+
+/* Hover effect */
+.relative.inline-flex:hover {
+    background-color: #f3f4f6; /* Gray-100 */
+    color: #1f2937; /* Gray-900 */
+}
+
+/* Disabled previous/next button */
+.relative.inline-flex[aria-disabled="true"] {
+    background-color: white;
+    color: #9ca3af; /* Gray-400 */
+    cursor: not-allowed;
+}
+
+/* Active button on click */
+.relative.inline-flex:active {
+    background-color: #e5e7eb; /* Slightly darker Gray-100 */
+}
