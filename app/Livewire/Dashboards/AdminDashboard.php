@@ -105,21 +105,62 @@ class AdminDashboard extends Component
 
     protected function loadRecentActivities(): void
     {
-        $this->recentActivities = DB::table('assets')
-            ->join('users', 'assets.assigned_to', '=', 'users.id')
-            ->join('departments', 'assets.current_department_id', '=', 'departments.id')
-            ->where('departments.organization_id', $this->user->organization_id)
+        // Asset activities
+        $assetActivities = DB::table('assets')
+            ->leftJoin('users', 'assets.assigned_to', '=', 'users.id')
+            ->leftJoin('departments', 'assets.current_department_id', '=', 'departments.id')
+            ->where('assets.organization_id', $this->user->organization_id)
             ->when($this->selectedDepartment, function($query) {
                 $query->where('assets.current_department_id', $this->selectedDepartment);
             })
             ->select(
-                'assets.name as asset_name',
-                'users.name as user_name',
+                DB::raw("'asset' as activity_type"),
+                'assets.name as subject_name',
+                'users.name as related_user',
                 'departments.name as department_name',
-                'assets.status',
+                'assets.status as action',
                 'assets.updated_at'
-            )
-            ->orderBy('assets.updated_at', 'desc')
+            );
+
+        // User activities (new users added)
+        $userActivities = DB::table('users')
+            ->leftJoin('departments', 'users.department_id', '=', 'departments.id')
+            ->where('users.organization_id', $this->user->organization_id)
+            ->when($this->selectedDepartment, function($query) {
+                $query->where('users.department_id', $this->selectedDepartment);
+            })
+            ->select(
+                DB::raw("'user' as activity_type"),
+                'users.name as subject_name',
+                DB::raw('NULL as related_user'),
+                'departments.name as department_name',
+                DB::raw("'joined' as action"),
+                'users.created_at as updated_at'
+            );
+
+        // Maintenance activities
+        $maintenanceActivities = DB::table('maintenance_records')
+            ->join('assets', 'maintenance_records.asset_id', '=', 'assets.id')
+            ->leftJoin('users', 'maintenance_records.performed_by', '=', 'users.id')
+            ->leftJoin('departments', 'assets.current_department_id', '=', 'departments.id')
+            ->where('assets.organization_id', $this->user->organization_id)
+            ->when($this->selectedDepartment, function($query) {
+                $query->where('assets.current_department_id', $this->selectedDepartment);
+            })
+            ->select(
+                DB::raw("'maintenance' as activity_type"),
+                'assets.name as subject_name',
+                'users.name as related_user',
+                'departments.name as department_name',
+                'maintenance_records.maintenance_type as action',
+                'maintenance_records.created_at as updated_at'
+            );
+
+        // Combine all activities
+        $this->recentActivities = $assetActivities
+            ->union($userActivities)
+            ->union($maintenanceActivities)
+            ->orderBy('updated_at', 'desc')
             ->limit(10)
             ->get();
     }

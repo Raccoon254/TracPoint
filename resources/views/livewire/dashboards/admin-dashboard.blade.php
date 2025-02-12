@@ -97,8 +97,8 @@
                 <div class="grid grid-cols-4 gap-4 h-full">
                     @foreach($stats['asset_utilization'] as $status => $count)
                         <div class="flex flex-col">
-                            <div class="flex-1 bg-emerald-50 rounded-t-lg relative">
-                                <div class="absolute bottom-0 w-full bg-emerald-500 rounded-b-lg transition-all duration-500"
+                            <div class="flex-1 bg-emerald-100 rounded-lg relative">
+                                <div class="absolute bottom-0 w-full bg-emerald-500 rounded-lg transition-all duration-500"
                                      style="height: {{ $totalAssets > 0 ? ($count / $totalAssets * 100) : 0 }}%">
                                 </div>
                             </div>
@@ -164,13 +164,27 @@
                     <div class="flex-1">
                         <div class="flex justify-between items-start">
                             <p class="text-sm font-medium text-gray-900">
-                                {{ $activity->asset_name }}
-                                <span class="text-gray-600">was {{ str_replace('_', ' ', $activity->status) }} to</span>
-                                {{ $activity->user_name }}
+                                @switch($activity->activity_type)
+                                    @case('asset')
+                                        {{ $activity->subject_name }}
+                                        <span class="text-gray-600">was {{ str_replace('_', ' ', $activity->action) }} to</span>
+                                        {{ $activity->related_user }}
+                                        @break
+                                    @case('user')
+                                        {{ $activity->subject_name }}
+                                        <span class="text-gray-600">joined</span>
+                                        {{ $activity->department_name }}
+                                        @break
+                                    @case('maintenance')
+                                        {{ $activity->subject_name }}
+                                        <span class="text-gray-600">had {{ str_replace('_', ' ', $activity->action) }} by</span>
+                                        {{ $activity->related_user }}
+                                        @break
+                                @endswitch
                             </p>
                             <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
-                                {{ $activity->department_name }}
-                            </span>
+                            {{ $activity->department_name }}
+                        </span>
                         </div>
                         <p class="text-sm text-gray-500 mt-1">
                             {{ \Carbon\Carbon::parse($activity->updated_at)->diffForHumans() }}
