@@ -282,6 +282,7 @@ class EditAsset extends Component
         // Update the asset
         $this->asset->update([
             'category_id' => $this->category_id,
+            'organization_id' => auth()->user()->organization_id,
             'name' => $this->name,
             'description' => $this->description,
             'model' => $this->model,

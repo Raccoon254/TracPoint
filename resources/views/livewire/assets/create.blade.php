@@ -402,6 +402,7 @@
                     <div class="mt-4">
                         <h4 class="text-sm font-medium text-gray-700 mb-2">Primary Image Preview</h4>
                         <img src="{{ $primary_image->temporaryUrl() }}"
+                                alt="Primary Image"
                              class="w-32 h-32 object-cover rounded-lg border border-gray-200">
                     </div>
                 @endif
@@ -409,9 +410,10 @@
                 @if ($additional_images)
                     <div class="mt-4">
                         <h4 class="text-sm font-medium text-gray-700 mb-2">Additional Images Preview</h4>
-                        <div class="grid grid-cols-4 gap-4">
+                        <div class="flex flex-wrap gap-4">
                             @foreach($additional_images as $image)
                                 <img src="{{ $image->temporaryUrl() }}"
+                                     alt="Additional Image"
                                      class="w-24 h-24 object-cover rounded-lg border border-gray-200">
                             @endforeach
                         </div>

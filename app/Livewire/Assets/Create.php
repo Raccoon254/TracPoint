@@ -66,9 +66,9 @@ class Create extends Component
 
     public function mount(): void
     {
-        $this->categories = AssetCategory::all();
-        $this->departments = Department::all();
-        $this->users = User::all();
+        $this->categories = AssetCategory::where('organization_id', auth()->user()->organization_id)->get();
+        $this->departments = Department::where('organization_id', auth()->user()->organization_id)->get();
+        $this->users = User::where('organization_id', auth()->user()->organization_id)->get();
     }
 
     public function updatedCategoryId($value): void
@@ -96,6 +96,7 @@ class Create extends Component
             'depreciation_rate' => $this->depreciation_rate,
             'requires_maintenance' => $this->requires_maintenance,
             'maintenance_frequency' => $this->maintenance_frequency,
+            'organization_id' => auth()->user()->organization_id,
         ]);
 
         $this->category_id = $category->id;
@@ -162,6 +163,7 @@ class Create extends Component
         $asset = Asset::create([
             'asset_code' => $assetCode,
             'category_id' => $this->category_id,
+            'organization_id' => auth()->user()->organization_id,
             'name' => $this->name,
             'description' => $this->description,
             'model' => $this->model,
