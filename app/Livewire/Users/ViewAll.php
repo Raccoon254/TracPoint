@@ -91,12 +91,6 @@ class ViewAll extends Component
     {
         $user = User::findOrFail($userId);
 
-        // Check authorization
-        if (!auth()->user()->role === 'super_admin' &&
-            auth()->user()->organization_id !== $user->organization_id) {
-            return;
-        }
-
         $this->userId = $user->id;
         $this->name = $user->name;
         $this->email = $user->email;
@@ -108,7 +102,7 @@ class ViewAll extends Component
         $this->status = $user->status;
 
         // Update validation rules for edit
-        $this->rules['email'] = 'required|email|unique:users,email,' . $this->userId;
+        $this->rules['email'] = 'required|email|max:255';
         $this->rules['password'] = 'nullable|min:8|confirmed';
 
         $this->showEditModal = true;
@@ -137,8 +131,6 @@ class ViewAll extends Component
 
     public function updateUser(): void
     {
-        $this->validate();
-
         $user = User::findOrFail($this->userId);
 
         $data = [

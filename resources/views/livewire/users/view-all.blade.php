@@ -115,8 +115,14 @@
                                 {{ ucfirst($user->status) }}
                             </span>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm center gap-2 text-gray-500">
                             <button wire:click="editUser({{ $user->id }})" class="text-emerald-600 hover:text-emerald-900">Edit</button>
+                            <a href="{{ route('users.show', $user->id) }}"
+                               class="text-emerald-600 hover:text-emerald-900">
+                                <button class="ml-2 bg-emerald-600 text-emerald-50 px-2 py-1 center rounded-lg">
+                                    View <i data-lucide="circle-arrow-right" class="ml-1"></i>
+                                </button>
+                            </a>
                         </td>
                     </tr>
                 @empty
@@ -142,7 +148,11 @@
     </div>
 
     <!-- Create/Edit User Modal -->
-    <div x-data="{ show: @entangle('showCreateModal') || @entangle('showEditModal') }"
+    <div x-data="{
+            get show() {
+                return $wire.showCreateModal || $wire.showEditModal;
+            }
+        }"
          x-show="show"
          x-cloak
          class="fixed inset-0 z-50 overflow-y-auto"

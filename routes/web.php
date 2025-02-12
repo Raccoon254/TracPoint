@@ -7,6 +7,7 @@ use App\Livewire\Assets\Show;
 use App\Livewire\Assets\ViewAll;
 use App\Livewire\Categories\CategoriesIndex;
 use App\Livewire\Dashboards\MainDashboard;
+use App\Livewire\Users\ShowUser;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
@@ -27,6 +28,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('categories', CategoriesIndex::class)->name('categories.index');
 
     Route::get('users', \App\Livewire\Users\ViewAll::class)->name('users.index');
+    Route::get('users/{user}', ShowUser::class)->name('users.show');
 });
 
 require __DIR__.'/auth.php';
