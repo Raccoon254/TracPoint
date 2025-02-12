@@ -55,6 +55,8 @@ class IndexPage extends Component
         $this->categories = AssetCategory::where('organization_id', auth()->user()->organization_id)->get();
         $this->departments = Department::where('organization_id', auth()->user()->organization_id)->get();
         $this->maxPriceRange = Asset::where('organization_id', auth()->user()->organization_id)->max('value');
+
+        $this->priceRange = [0, $this->maxPriceRange];
     }
 
     public function updating($name): void

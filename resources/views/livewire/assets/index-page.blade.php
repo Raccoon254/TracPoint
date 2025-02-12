@@ -46,20 +46,20 @@
                         <div x-show="open" class="mt-4">
                             <div class="flex justify-between mb-2">
                                 <span class="text-sm text-gray-600">${{ number_format($priceRange[0]) }}</span>
-                                <span class="text-sm text-gray-600">${{ $maxPriceRange }}</span>
+                                <span class="text-sm text-gray-600">${{ number_format($maxPriceRange) }}</span>
                             </div>
                             <div class="relative">
                                 <input type="range"
                                        wire:model.live="priceRange.0"
                                        min="0"
                                        max="{{ $maxPriceRange }}"
-                                       step="{{ $maxPriceRange / 5 }}"
+                                       step="10"
                                        class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
                                 <input type="range"
                                        wire:model.lazy="priceRange.1"
                                        min="0"
                                        max="{{ $maxPriceRange }}"
-                                       step="{{ $maxPriceRange / 5 }}"
+                                       step="10"
                                        class="absolute top-0 w-full h-2 bg-transparent appearance-none cursor-pointer">
                             </div>
                         </div>
