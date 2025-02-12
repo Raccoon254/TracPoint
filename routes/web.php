@@ -26,11 +26,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('assets/{asset}/edit', EditAsset::class)->name('assets.edit');
     Route::get('assets', IndexPage::class)->name('assets.browse');
     Route::get('assets/request/{asset}', RequestAsset::class)->name('assets.request');
+    Route::get('requests', \App\Livewire\Requests\ShowAll::class)->name('requests.index');
 
     Route::get('categories', CategoriesIndex::class)->name('categories.index');
 
     Route::get('users', \App\Livewire\Users\ViewAll::class)->name('users.index');
     Route::get('users/{user}', ShowUser::class)->name('users.show');
+
 });
 
 require __DIR__.'/auth.php';

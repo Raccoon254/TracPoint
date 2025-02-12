@@ -63,11 +63,11 @@ new class extends Component
                     </div>
 
                     <!-- Reports -->
-                    <x-nav-link href="#" class="inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 transition duration-150 ease-in-out">
+                    <x-nav-link href="{{route('requests.index')}}" class="inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 transition duration-150 ease-in-out">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                         </svg>
-                        {{ __('Reports') }}
+                        {{ __('Requests') }}
                     </x-nav-link>
 
                     <!-- Audits -->
