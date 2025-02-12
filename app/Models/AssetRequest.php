@@ -24,6 +24,7 @@ class AssetRequest extends Model
         'required_from',
         'required_until',
         'notes',
+        'organization_id',
     ];
 
     protected $casts = [
@@ -33,6 +34,10 @@ class AssetRequest extends Model
     ];
 
     // Relationships
+    public function organization(): BelongsTo
+    {
+        return $this->belongsTo(Organization::class);
+    }
 
     // The user that requested the asset.
     public function requester(): BelongsTo

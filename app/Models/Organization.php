@@ -45,4 +45,10 @@ class Organization extends Model
     {
         return $this->hasMany(Asset::class);
     }
+
+    // An organization has many asset requests.
+    public function assetRequests(): HasMany
+    {
+        return $this->hasMany(AssetRequest::class);
+    }
 }

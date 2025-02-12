@@ -25,7 +25,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('assets/{asset}', Show::class)->name('assets.show');
     Route::get('assets/{asset}/edit', EditAsset::class)->name('assets.edit');
     Route::get('assets', IndexPage::class)->name('assets.browse');
-    Route::get('assets/request', RequestAsset::class)->name('assets.request');
+    Route::get('assets/request/{asset}', RequestAsset::class)->name('assets.request');
 
     Route::get('categories', CategoriesIndex::class)->name('categories.index');
 
