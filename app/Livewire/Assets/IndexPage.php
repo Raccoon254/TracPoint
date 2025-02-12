@@ -55,9 +55,14 @@ class IndexPage extends Component
         $this->departments = Department::where('organization_id', auth()->user()->organization_id)->get();
     }
 
-    public function updatedSearch(): void
+    public function updating($name): void
     {
-        $this->resetPage();
+        if (in_array($name, [
+            'search', 'selectedCategories', 'selectedDepartments',
+            'selectedStatuses', 'selectedConditions', 'priceRange'
+        ])) {
+            $this->resetPage();
+        }
     }
 
     public function clearFilters(): void
@@ -71,6 +76,7 @@ class IndexPage extends Component
             'priceRange',
             'sortBy'
         ]);
+        $this->resetPage();
     }
 
     public function toggleView(): void
@@ -78,18 +84,78 @@ class IndexPage extends Component
         $this->view = $this->view === 'grid' ? 'list' : 'grid';
     }
 
+    protected function getAssetQuery()
+    {
+        $query = Asset::query()
+            ->where('organization_id', auth()->user()->organization_id)
+            ->with(['category', 'department', 'assignedUser', 'assetImages']);
+
+        // Apply search filter
+        if ($this->search) {
+            $query->where(function ($q) {
+                $q->where('name', 'like', '%' . $this->search . '%')
+                    ->orWhere('asset_code', 'like', '%' . $this->search . '%')
+                    ->orWhere('description', 'like', '%' . $this->search . '%')
+                    ->orWhere('serial_number', 'like', '%' . $this->search . '%');
+            });
+        }
+
+        // Apply category filter
+        if (!empty($this->selectedCategories)) {
+            $query->whereIn('category_id', $this->selectedCategories);
+        }
+
+        // Apply department filter
+        if (!empty($this->selectedDepartments)) {
+            $query->whereIn('current_department_id', $this->selectedDepartments);
+        }
+
+        // Apply status filter
+        if (!empty($this->selectedStatuses)) {
+            $query->whereIn('status', $this->selectedStatuses);
+        }
+
+        // Apply condition filter
+        if (!empty($this->selectedConditions)) {
+            $query->whereIn('condition', $this->selectedConditions);
+        }
+
+        // Apply price range filter
+        if ($this->priceRange[0] > 0 || $this->priceRange[1] < 100000) {
+            $query->whereBetween('value', $this->priceRange);
+        }
+
+        // Apply sorting
+        switch ($this->sortBy) {
+            case 'newest':
+                $query->latest();
+                break;
+            case 'oldest':
+                $query->oldest();
+                break;
+            case 'name_asc':
+                $query->orderBy('name', 'asc');
+                break;
+            case 'name_desc':
+                $query->orderBy('name', 'desc');
+                break;
+            case 'value_asc':
+                $query->orderBy('value', 'asc');
+                break;
+            case 'value_desc':
+                $query->orderBy('value', 'desc');
+                break;
+        }
+
+        return $query;
+    }
+
     public function render(): View
     {
+        $assets = $this->getAssetQuery()->paginate(12);
+
         return view('livewire.assets.index-page', [
-            'assets' => Asset::query()
-                ->when($this->search, function ($query, $search) {
-                    $query->where(function ($q) use ($search) {
-                        $q->where('name', 'like', '%'.$search.'%')
-                            ->orWhere('asset_code', 'like', '%'.$search.'%');
-                    });
-                })
-                ->with(['category', 'department', 'assignedUser'])
-                ->paginate(10),
+            'assets' => $assets,
         ]);
     }
 }
