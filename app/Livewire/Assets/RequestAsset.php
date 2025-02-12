@@ -47,6 +47,7 @@ class RequestAsset extends Component
     public function pendingRequests()
     {
         return AssetRequest::where('requester_id', auth()->user()->id)
+            ->where('asset_id', $this->asset->id)
             ->where('status', 'pending')
             ->with(['category'])
             ->get();
@@ -65,14 +66,13 @@ class RequestAsset extends Component
     public function recentRequests()
     {
         return AssetRequest::where('requester_id', auth()->user()->id)
-            ->where('status', '!=', 'pending')
             ->with(['category', 'approver'])
             ->latest()
             ->take(5)
             ->get();
     }
 
-    public function submitRequest()
+    public function submitRequest(): null
     {
         $this->validate();
 

@@ -218,7 +218,13 @@
                                 </span>
                             </div>
                         @empty
-                            <p class="text-sm text-gray-500">No assets currently assigned</p>
+                            <div>
+                                @include('partials.empty', [
+                                    'title' => 'No assets assigned',
+                                    'message' => 'Recent assets you have been assigned will appear here.',
+                                    'icon' => 'user'
+                                ])
+                            </div>
                         @endforelse
                     </div>
                 </div>
@@ -249,7 +255,13 @@
                                 @endif
                             </div>
                         @empty
-                            <p class="text-sm text-gray-500">No recent requests</p>
+                            <div>
+                                @include('partials.empty', [
+                                    'title' => 'No recent requests',
+                                    'message' => 'Your recent asset requests will appear here.',
+                                    'icon' => 'request'
+                                ])
+                            </div>
                         @endforelse
                     </div>
                 </div>
