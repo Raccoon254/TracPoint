@@ -35,6 +35,36 @@
                         </div>
                     </div>
 
+                    <!-- Price Range -->
+                    <div x-data="{ open: true }">
+                        <button @click="open = !open" class="flex items-center justify-between w-full text-sm font-medium text-gray-900">
+                            <span>Price Range</span>
+                            <svg class="h-5 w-5 text-gray-500" :class="{'transform rotate-180': open}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div x-show="open" class="mt-4">
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm text-gray-600">${{ number_format($priceRange[0]) }}</span>
+                                <span class="text-sm text-gray-600">${{ $maxPriceRange }}</span>
+                            </div>
+                            <div class="relative">
+                                <input type="range"
+                                       wire:model.live="priceRange.0"
+                                       min="0"
+                                       max="{{ $maxPriceRange }}"
+                                       step="{{ $maxPriceRange / 5 }}"
+                                       class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                                <input type="range"
+                                       wire:model.lazy="priceRange.1"
+                                       min="0"
+                                       max="{{ $maxPriceRange }}"
+                                       step="{{ $maxPriceRange / 5 }}"
+                                       class="absolute top-0 w-full h-2 bg-transparent appearance-none cursor-pointer">
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Categories -->
                     <div x-data="{ open: true }">
                         <button @click="open = !open" class="flex items-center justify-between w-full text-sm font-medium text-gray-900">

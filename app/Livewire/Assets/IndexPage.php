@@ -23,6 +23,7 @@ class IndexPage extends Component
     public $priceRange = [0, 100000];
     public $sortBy = 'newest';
     public $view = 'grid';
+    public $maxPriceRange;
 
     // Filter options
     public $categories;
@@ -53,6 +54,7 @@ class IndexPage extends Component
     {
         $this->categories = AssetCategory::where('organization_id', auth()->user()->organization_id)->get();
         $this->departments = Department::where('organization_id', auth()->user()->organization_id)->get();
+        $this->maxPriceRange = Asset::where('organization_id', auth()->user()->organization_id)->max('value');
     }
 
     public function updating($name): void
