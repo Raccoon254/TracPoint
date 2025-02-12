@@ -11,11 +11,9 @@ use Livewire\Attributes\Computed;
 
 class RequestAsset extends Component
 {
-    // Current User's Assets
-    public $currentAssets;
+    public Asset $asset;
 
     // Form Data
-    public $category_id = '';
     public $purpose = '';
     public $quantity = 1;
     public $priority = 'medium';
@@ -25,7 +23,6 @@ class RequestAsset extends Component
 
     // Form Rules
     protected $rules = [
-        'category_id' => 'required|exists:asset_categories,id',
         'purpose' => 'required|string|min:10',
         'quantity' => 'required|integer|min:1',
         'priority' => 'required|in:low,medium,high',
@@ -34,18 +31,16 @@ class RequestAsset extends Component
         'notes' => 'nullable|string|max:500',
     ];
 
-    public function mount(): void
+    public function mount(Asset $asset): void
     {
+        // Check if user can request this asset (same organization)
+        if (auth()->user()->organization_id !== $asset->organization_id) {
+            abort(403);
+        }
+
+        $this->asset = $asset;
         $this->required_from = now()->addDay()->format('Y-m-d');
         $this->required_until = now()->addDays(30)->format('Y-m-d');
-    }
-
-    #[Computed]
-    public function categories()
-    {
-        return AssetCategory::where('organization_id', auth()->user()->organization_id)
-            ->orderBy('name')
-            ->get();
     }
 
     #[Computed]
@@ -77,13 +72,13 @@ class RequestAsset extends Component
             ->get();
     }
 
-    public function submitRequest(): void
+    public function submitRequest()
     {
         $this->validate();
 
         AssetRequest::create([
             'requester_id' => auth()->id(),
-            'category_id' => $this->category_id,
+            'category_id' => $this->asset->category_id,
             'purpose' => $this->purpose,
             'quantity' => $this->quantity,
             'priority' => $this->priority,
@@ -94,8 +89,11 @@ class RequestAsset extends Component
             'organization_id' => auth()->user()->organization_id,
         ]);
 
-        $this->reset(['category_id', 'purpose', 'quantity', 'priority', 'notes']);
+        $this->reset(['purpose', 'quantity', 'priority', 'notes']);
         $this->dispatch('request-submitted');
+
+        // Optionally redirect back to asset details
+        return $this->redirect(route('assets.show', $this->asset), navigate: true);
     }
 
     public function cancelRequest($requestId): void
@@ -115,7 +113,6 @@ class RequestAsset extends Component
             'pendingRequests' => $this->pendingRequests,
             'assignedAssets' => $this->assignedAssets,
             'recentRequests' => $this->recentRequests,
-            'categories' => $this->categories,
         ]);
     }
 }
