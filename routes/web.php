@@ -5,6 +5,7 @@ use App\Livewire\Assets\EditAsset;
 use App\Livewire\Assets\IndexPage;
 use App\Livewire\Assets\Show;
 use App\Livewire\Assets\ViewAll;
+use App\Livewire\Categories\CategoriesIndex;
 use App\Livewire\Dashboards\MainDashboard;
 use Illuminate\Support\Facades\Route;
 
@@ -38,5 +39,9 @@ Route::get('assets/{asset}/edit', EditAsset::class)
 Route::get('assets', IndexPage::class)
     ->middleware(['auth', 'verified'])
     ->name('assets.browse');
+
+Route::get('categories', CategoriesIndex::class)
+    ->middleware(['auth', 'verified'])
+    ->name('categories.index');
 
 require __DIR__.'/auth.php';
