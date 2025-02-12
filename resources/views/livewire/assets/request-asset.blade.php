@@ -33,11 +33,14 @@
                                 <div class="mt-2 text-sm text-yellow-700">
                                     <ul role="list" class="list-disc space-y-1 pl-5">
                                         @foreach($pendingRequests as $request)
-                                            <li>
+                                            <li class="flex items-center">
                                                 {{ $request->quantity }} x {{ $request->category->name }}
                                                 <button wire:click="cancelRequest({{ $request->id }})"
-                                                        class="ml-2 text-red-600 hover:text-red-800">
+                                                        class="ml-2 center bg-red-600 text-red-100 hover:text-red-100 px-2 py-1 rounded-lg text-xs font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
                                                     Cancel
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 h-4 w-4">
+                                                        <circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/>
+                                                    </svg>
                                                 </button>
                                             </li>
                                         @endforeach
