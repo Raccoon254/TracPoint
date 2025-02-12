@@ -16,6 +16,10 @@
                 </div>
             </div>
             <div class="mt-4 flex md:ml-4 md:mt-0">
+                <a href="{{ route('assets.request', $asset) }}"
+                   class="inline-flex items-center rounded-md bg-emerald-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-700">
+                    Request Asset
+                </a>
                 <a href="{{ route('assets.edit', $asset) }}"
                    class="ml-3 inline-flex items-center rounded-md bg-emerald-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-emerald-700">
                     Edit Asset

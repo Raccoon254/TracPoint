@@ -3,6 +3,7 @@
 use App\Livewire\Assets\Create;
 use App\Livewire\Assets\EditAsset;
 use App\Livewire\Assets\IndexPage;
+use App\Livewire\Assets\RequestAsset;
 use App\Livewire\Assets\Show;
 use App\Livewire\Assets\ViewAll;
 use App\Livewire\Categories\CategoriesIndex;
@@ -24,6 +25,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('assets/{asset}', Show::class)->name('assets.show');
     Route::get('assets/{asset}/edit', EditAsset::class)->name('assets.edit');
     Route::get('assets', IndexPage::class)->name('assets.browse');
+    Route::get('assets/request', RequestAsset::class)->name('assets.request');
 
     Route::get('categories', CategoriesIndex::class)->name('categories.index');
 
