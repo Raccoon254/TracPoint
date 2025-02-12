@@ -11,37 +11,22 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome');
 
-Route::get('dashboard', MainDashboard::class)
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
-
 Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
-//Assets - assets.create
-Route::get('assets/create', Create::class)
-    ->middleware(['auth', 'verified'])
-    ->name('assets.create');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('dashboard', MainDashboard::class)->name('dashboard');
 
-Route::get('assets/all', ViewAll::class)
-    ->middleware(['auth', 'verified'])
-    ->name('assets.index');
+    Route::get('assets/create', Create::class)->name('assets.create');
+    Route::get('assets/all', ViewAll::class)->name('assets.index');
+    Route::get('assets/{asset}', Show::class)->name('assets.show');
+    Route::get('assets/{asset}/edit', EditAsset::class)->name('assets.edit');
+    Route::get('assets', IndexPage::class)->name('assets.browse');
 
-Route::get('assets/{asset}', Show::class)
-    ->middleware(['auth', 'verified'])
-    ->name('assets.show');
+    Route::get('categories', CategoriesIndex::class)->name('categories.index');
 
-Route::get('assets/{asset}/edit', EditAsset::class)
-    ->middleware(['auth', 'verified'])
-    ->name('assets.edit');
-
-Route::get('assets', IndexPage::class)
-    ->middleware(['auth', 'verified'])
-    ->name('assets.browse');
-
-Route::get('categories', CategoriesIndex::class)
-    ->middleware(['auth', 'verified'])
-    ->name('categories.index');
+    Route::get('users', \App\Livewire\Users\ViewAll::class)->name('users.index');
+});
 
 require __DIR__.'/auth.php';
