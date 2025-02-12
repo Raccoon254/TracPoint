@@ -16,40 +16,78 @@
             <!-- Request Form -->
             <div class="lg:col-span-2 space-y-6">
                 <!-- Pending Requests Alert -->
-                @if($pendingRequests->isNotEmpty())
-                    <div class="rounded-md bg-yellow-50 p-4">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <svg class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd"
-                                          d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z"
-                                          clip-rule="evenodd"/>
-                                </svg>
+
+                <div class="space-y-6">
+                    @if($pendingRequests->isNotEmpty())
+                        <!-- Pending Asset Requests -->
+                        <div class="bg-white shadow-sm border-l-4 border-red-500 rounded-none overflow-hidden">
+                            <div class="px-6 py-4 border-b bg-gray-50">
+                                <h3 class="text-lg font-semibold text-gray-900">Pending Asset Requests</h3>
+                                <p class="text-sm text-gray-600">These are your current asset requests awaiting
+                                    approval.</p>
                             </div>
-                            <div class="ml-3">
-                                <h3 class="text-sm font-medium text-yellow-800">
-                                    You have pending requests
-                                </h3>
-                                <div class="mt-2 text-sm text-yellow-700">
-                                    <ul role="list" class="list-disc space-y-1 pl-5">
-                                        @foreach($pendingRequests as $request)
-                                            <li class="flex items-center">
-                                                {{ $request->quantity }} x {{ $request->category->name }}
-                                                <button wire:click="cancelRequest({{ $request->id }})"
-                                                        class="ml-2 center bg-red-600 text-red-100 hover:text-red-100 px-2 py-1 rounded-lg text-xs font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                                                    Cancel
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 h-4 w-4">
-                                                        <circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/>
-                                                    </svg>
-                                                </button>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            </div>
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                        Quantity
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                        Purpose
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Required
+                                        Dates
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                        Priority
+                                    </th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                        Actions
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                @foreach($pendingRequests as $request)
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                            {{ $request->quantity }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ $request->purpose }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ $request->required_from->format('M d, Y') }}
+                                            - {{ $request->required_until->format('M d, Y') }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                                                @if($request->priority === 'high') bg-red-100 text-red-800
+                                                @elseif($request->priority === 'medium') bg-yellow-100 text-yellow-800
+                                                @else bg-green-100 text-green-800
+                                                @endif">
+                                                {{ ucfirst($request->priority) }}
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                            <button wire:click="cancelRequest({{ $request->id }})"
+                                                    class="text-red-600 hover:text-red-900 flex items-center">
+                                                Cancel
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="ml-1 h-4 w-4"
+                                                     viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <circle cx="12" cy="12" r="10"/>
+                                                    <path d="m15 9-6 6"/>
+                                                    <path d="m9 9 6 6"/>
+                                                </svg>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
                         </div>
-                    </div>
-                @endif
+                    @endif
+                </div>
 
                 <!-- Asset Details Summary -->
                 <div class="bg-gray-50 rounded-lg p-4">
@@ -61,7 +99,8 @@
                         <div>
                             <div class="flex relative">
                                 @foreach($asset->assetImages as $image)
-                                    <div class="absolute" style="left: {{ $loop->index * 2 }}rem; z-index: {{ 100 - $loop->index }}">
+                                    <div class="absolute"
+                                         style="left: {{ $loop->index * 2 }}rem; z-index: {{ 100 - $loop->index }}">
                                         <img src="{{ Storage::url($image->image_path) }}"
                                              alt="Asset image"
                                              class="rounded-full ring-gray-50 ring-2 object-cover w-14 h-14">
