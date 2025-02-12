@@ -51,8 +51,8 @@ class IndexPage extends Component
 
     public function mount(): void
     {
-        $this->categories = AssetCategory::all();
-        $this->departments = Department::all();
+        $this->categories = AssetCategory::where('organization_id', auth()->user()->organization_id)->get();
+        $this->departments = Department::where('organization_id', auth()->user()->organization_id)->get();
     }
 
     public function updatedSearch(): void
