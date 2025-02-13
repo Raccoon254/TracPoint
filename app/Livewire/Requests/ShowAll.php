@@ -71,6 +71,10 @@ class ShowAll extends Component
     {
         $this->currentRequest = AssetRequest::with(['requester', 'category'])->findOrFail($requestId);
         $this->currentStep = 1;
+        $status = $this->currentRequest->status;
+        if ($status !== 'pending') {
+            $this->currentStep = 2;
+        }
         $this->showActionModal = true;
     }
 

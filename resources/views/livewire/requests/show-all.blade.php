@@ -229,17 +229,27 @@
                         <!-- Step 2: Asset Assignment -->
                         @if($currentStep === 2)
                             <div class="space-y-4">
-                                <div>
-                                    <label for="selectedAsset" class="block text-sm font-medium text-gray-700">Select Asset to Assign</label>
-                                    <select wire:model.live="selectedAsset"
-                                            class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm">
-                                        <option value="">Select an asset</option>
-                                        @foreach($availableAssets ?? [] as $asset)
-                                            <option value="{{ $asset->id }}">{{ $asset->name }} ({{ $asset->asset_code }})</option>
-                                        @endforeach
-                                    </select>
-                                    @error('selectedAsset') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
-                                </div>
+                                @if( $availableAssets === null || $availableAssets->isEmpty())
+                                    <div>
+                                        @include('partials.empty', [
+                                            'title' => 'No assets available',
+                                            'icon' => 'asset',
+                                            'message' => 'No assets are available to assign to this request.'
+                                        ])
+                                    </div>
+                                @else
+                                    <div>
+                                        <label for="selectedAsset" class="block text-sm font-medium text-gray-700">Select Asset to Assign</label>
+                                        <select wire:model.live="selectedAsset"
+                                                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm">
+                                            <option value="">Select an asset</option>
+                                            @foreach($availableAssets ?? [] as $asset)
+                                                <option value="{{ $asset->id }}">{{ $asset->name }} ({{ $asset->asset_code }})</option>
+                                            @endforeach
+                                        </select>
+                                        @error('selectedAsset') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
+                                    </div>
+                                @endif
 
                                 <div class="flex justify-end mt-4">
                                     <button type="button" wire:click="fulfillRequest"
