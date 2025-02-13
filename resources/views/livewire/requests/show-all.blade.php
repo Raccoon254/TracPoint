@@ -143,12 +143,8 @@
     <!-- Action Modal -->
     <div x-data="{ show: @entangle('showActionModal') }"
          x-show="show"
-         x-on:open-modal.window="show = true"
-         x-on:close-modal.window="show = false"
-         x-bind:class="{ 'show': show }"
          x-cloak
-         class="fixed inset-0 z-50 overflow-y-auto"
-         wire:model="showActionModal">
+         class="fixed inset-0 z-50 overflow-y-auto">
         <!-- Background overlay -->
         <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
 
@@ -156,6 +152,7 @@
             <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
                 @if($currentRequest)
                     <div class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+                        <!-- Close Button -->
                         <div class="absolute right-0 top-0 hidden pr-4 pt-4 sm:block">
                             <button wire:click="resetModal" type="button"
                                     class="rounded-md bg-white text-gray-400 hover:text-gray-500">
@@ -166,100 +163,97 @@
                             </button>
                         </div>
 
-                        <!-- Request Details -->
-                        <div class="sm:flex sm:items-start">
-                            <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
-                                <h3 class="text-lg font-semibold leading-6 text-gray-900">
-                                    Request Details
-                                </h3>
+                        <!-- Steps Indicator -->
+                        <div class="mb-8 flex justify-center">
+                            <ol class="flex items-center space-x-5">
+                                <li class="flex items-center">
+                                <span class="rounded-full @if($currentStep >= 1) bg-emerald-600 @else bg-gray-300 @endif flex h-8 w-8 items-center justify-center">
+                                    <span class="text-white text-sm">1</span>
+                                </span>
+                                    <span class="ml-2 text-sm font-medium @if($currentStep >= 1) text-emerald-600 @else text-gray-500 @endif">Review</span>
+                                </li>
 
-                                <div class="mt-4 space-y-4">
-                                    <!-- Request Information -->
-                                    <div class="bg-gray-50 rounded-lg p-4">
-                                        <dl class="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
-                                            <div>
-                                                <dt class="text-sm font-medium text-gray-500">Requester</dt>
-                                                <dd class="mt-1 text-sm text-gray-900">{{ $currentRequest->requester->name }}</dd>
-                                            </div>
-                                            <div>
-                                                <dt class="text-sm font-medium text-gray-500">Category</dt>
-                                                <dd class="mt-1 text-sm text-gray-900">{{ $currentRequest->category->name }}</dd>
-                                            </div>
-                                            <div>
-                                                <dt class="text-sm font-medium text-gray-500">Required From</dt>
-                                                <dd class="mt-1 text-sm text-gray-900">{{ $currentRequest->required_from->format('M d, Y') }}</dd>
-                                            </div>
-                                            <div>
-                                                <dt class="text-sm font-medium text-gray-500">Required Until</dt>
-                                                <dd class="mt-1 text-sm text-gray-900">{{ $currentRequest->required_until->format('M d, Y') }}</dd>
-                                            </div>
-                                            <div class="sm:col-span-2">
-                                                <dt class="text-sm font-medium text-gray-500">Purpose</dt>
-                                                <dd class="mt-1 text-sm text-gray-900">{{ $currentRequest->purpose }}</dd>
-                                            </div>
-                                        </dl>
+                                <li class="flex items-center">
+                                <span class="rounded-full @if($currentStep >= 2) bg-emerald-600 @else bg-gray-300 @endif flex h-8 w-8 items-center justify-center">
+                                    <span class="text-white text-sm">2</span>
+                                </span>
+                                    <span class="ml-2 text-sm font-medium @if($currentStep >= 2) text-emerald-600 @else text-gray-500 @endif">Assign</span>
+                                </li>
+                            </ol>
+                        </div>
+
+                        <!-- Step 1: Review and Approve -->
+                        @if($currentStep === 1)
+                            <div class="space-y-4">
+                                <!-- Request Information -->
+                                <div class="bg-gray-50 rounded-lg p-4">
+                                    <dl class="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
+                                        <div>
+                                            <dt class="text-sm font-medium text-gray-500">Requester</dt>
+                                            <dd class="mt-1 text-sm text-gray-900">{{ $currentRequest->requester->name }}</dd>
+                                        </div>
+                                        <div>
+                                            <dt class="text-sm font-medium text-gray-500">Category</dt>
+                                            <dd class="mt-1 text-sm text-gray-900">{{ $currentRequest->category->name }}</dd>
+                                        </div>
+                                        <div>
+                                            <dt class="text-sm font-medium text-gray-500">Required From</dt>
+                                            <dd class="mt-1 text-sm text-gray-900">{{ $currentRequest->required_from->format('M d, Y') }}</dd>
+                                        </div>
+                                        <div>
+                                            <dt class="text-sm font-medium text-gray-500">Required Until</dt>
+                                            <dd class="mt-1 text-sm text-gray-900">{{ $currentRequest->required_until->format('M d, Y') }}</dd>
+                                        </div>
+                                        <div class="sm:col-span-2">
+                                            <dt class="text-sm font-medium text-gray-500">Purpose</dt>
+                                            <dd class="mt-1 text-sm text-gray-900">{{ $currentRequest->purpose }}</dd>
+                                        </div>
+                                    </dl>
+                                </div>
+
+                                @if($currentRequest->status === 'pending')
+                                    <div class="flex justify-end space-x-3">
+                                        <button type="button" wire:click="toggleRejectionNote"
+                                                class="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                                            Reject
+                                        </button>
+                                        <button type="button" wire:click="approveRequest"
+                                                class="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
+                                            Approve & Continue
+                                        </button>
                                     </div>
+                                @endif
+                            </div>
+                        @endif
 
-                                    <!-- Action Section -->
-                                    @if($currentRequest->status === 'pending')
-                                        <div class="space-y-4">
-                                            <div class="flex justify-end space-x-3">
-                                                <!-- Instead of calling rejectRequest immediately, toggle the rejection note -->
-                                                <button type="button" wire:click="toggleRejectionNote"
-                                                        class="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                                                    Reject
-                                                </button>
-                                                <button type="button" wire:click="approveRequest"
-                                                        class="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
-                                                    Approve
-                                                </button>
-                                            </div>
+                        <!-- Step 2: Asset Assignment -->
+                        @if($currentStep === 2)
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="selectedAsset" class="block text-sm font-medium text-gray-700">Select Asset to Assign</label>
+                                    <select wire:model.live="selectedAsset"
+                                            class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm">
+                                        <option value="">Select an asset</option>
+                                        @foreach($availableAssets ?? [] as $asset)
+                                            <option value="{{ $asset->id }}">{{ $asset->name }} ({{ $asset->asset_code }})</option>
+                                        @endforeach
+                                    </select>
+                                    @error('selectedAsset') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
+                                </div>
 
-                                            <!-- Rejection Note Field -->
-                                            <div x-data="{ show: @entangle('showRejectionNote') }" x-show="show" class="mt-4">
-                                                <label for="rejectionNote" class="block text-sm font-medium text-gray-700">Rejection Note</label>
-                                                <textarea wire:model="rejectionNote" rows="3"
-                                                          class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm"
-                                                          placeholder="Please provide a reason for rejection..."></textarea>
-                                                @error('rejectionNote') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
-
-                                                <!-- Confirm Rejection Button -->
-                                                <div class="mt-2 flex justify-end">
-                                                    <button type="button" wire:click="rejectRequest"
-                                                            class="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                                                        Confirm Rejection
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endif
-
-                                    <!-- Asset Assignment Section -->
-                                    @if($currentRequest->status === 'approved' && !$currentRequest->asset_id)
-                                        <div class="space-y-4">
-                                            <div>
-                                                <label for="selectedAsset" class="block text-sm font-medium text-gray-700">Select Asset</label>
-                                                <select wire:model="selectedAsset"
-                                                        class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-emerald-500 focus:border-emerald-500 sm:text-sm">
-                                                    <option value="">Select an asset</option>
-                                                    @foreach($availableAssets ?? [] as $asset)
-                                                        <option value="{{ $asset->id }}">{{ $asset->name }} ({{ $asset->asset_code }})</option>
-                                                    @endforeach
-                                                </select>
-                                                @error('selectedAsset') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
-                                            </div>
-
-                                            <div class="flex justify-end">
-                                                <button type="button" wire:click="fulfillRequest"
-                                                        class="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
-                                                    Assign Asset
-                                                </button>
-                                            </div>
-                                        </div>
-                                    @endif
+                                <div class="flex justify-end mt-4">
+                                    <button type="button" wire:click="fulfillRequest"
+                                        @class([
+                                            'inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white',
+                                            'bg-emerald-600 hover:bg-emerald-700' => $selectedAsset,
+                                            'bg-gray-400 cursor-not-allowed' => !$selectedAsset
+                                        ])
+                                        @disabled(!$selectedAsset)>
+                                        Complete Assignment
+                                    </button>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                 @endif
             </div>
