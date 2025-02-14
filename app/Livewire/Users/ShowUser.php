@@ -104,7 +104,7 @@ class ShowUser extends Component
             ->paginate(5);
     }
 
-    public function getDepartmentChainProperty()
+    public function getDepartmentChainProperty(): array
     {
         $chain = [];
         $department = $this->user->department;
@@ -122,7 +122,7 @@ class ShowUser extends Component
         return Asset::where('organization_id', $this->user->organization_id)->count();
     }
 
-    public function getAssetUtilizationRateProperty()
+    public function getAssetUtilizationRateProperty(): float|int
     {
         $totalAssigned = $this->user->assignedAssets()->count();
         $totalReturned = $this->user->assignedAssets()
@@ -173,7 +173,7 @@ class ShowUser extends Component
             ->paginate(5);
     }
 
-    public function getAssetUtilizationStatsProperty()
+    public function getAssetUtilizationStatsProperty(): array
     {
         $assignedAssets = $this->user->assignedAssets();
         $startDate = now()->subDays((int)$this->timeframe);
