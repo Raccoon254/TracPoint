@@ -153,7 +153,7 @@
             </p>
             <div class="flex gap-4 justify-center opacity-1" id="hero-cta">
                 <a href="/register" class="btn-gradient px-8 center py-4 text-lg">
-                    Get Started Free
+                    Get Started
                 </a>
                 <a href="#features" class="px-8 py-4 text-lg font-semibold text-emerald-600 hover:text-emerald-500 transition-colors">
                     Learn More →
