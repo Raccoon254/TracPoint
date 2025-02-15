@@ -3,6 +3,10 @@
         <!-- Header -->
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-2xl font-bold text-gray-900">Asset Requests</h2>
+            <a href="{{ route('user.requests') }}"
+               class="inline-flex items-center px-4 py-2 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
+                My Requests
+            </a>
         </div>
 
         <!-- Filters -->

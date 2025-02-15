@@ -164,14 +164,14 @@ class ViewAll extends Component
     public function render(): View
     {
         $query = User::query()
-            ->when(!auth()->user()->role === 'super_admin', function($query) {
+            ->when(auth()->user()->role !== 'super_admin', function($query) {
                 $query->where('organization_id', auth()->user()->organization_id);
             })
-            ->when($this->search, function($query, $search) {
-                $query->where(function($q) use ($search) {
-                    $q->where('name', 'like', "%{$search}%")
-                        ->orWhere('email', 'like', "%{$search}%")
-                        ->orWhere('employee_id', 'like', "%{$search}%");
+            ->when($this->search, function($query) {
+                $query->where(function($q) {
+                    $q->where('name', 'like', "%{$this->search}%")
+                        ->orWhere('email', 'like', "%{$this->search}%")
+                        ->orWhere('employee_id', 'like', "%{$this->search}%");
                 });
             })
             ->when($this->selectedDepartment, function($query) {
