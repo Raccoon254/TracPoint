@@ -68,6 +68,16 @@
                         </div>
                     </div>
                 @endforeach
+
+                @if(count($assetUtilizationStats['by_category']) === 0)
+                    <div>
+                        @include('partials.empty', [
+                            'title' => 'No Asset Categories',
+                            'message' => 'Asset categories will appear here once assigned.',
+                            'icon' => 'asset'
+                        ])
+                    </div>
+                @endif
             </div>
         </div>
 
