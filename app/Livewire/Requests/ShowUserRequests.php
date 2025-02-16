@@ -100,6 +100,11 @@ class ShowUserRequests extends Component
         $this->dispatch('asset-returned', 'Asset returned successfully!');
     }
 
+    public function setActiveTab($tab): void
+    {
+        $this->activeTab = $tab;
+    }
+
     public function render(): View
     {
         return view('livewire.requests.show-user-requests', [

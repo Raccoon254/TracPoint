@@ -77,54 +77,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Recent Activity -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h3>
-                    <div class="space-y-4">
-                        @if($user->role === 'super_admin' && isset($stats['recent_audits']))
-                            @foreach($stats['recent_audits'] as $audit)
-                                <div class="flex items-center p-4 bg-gray-50 rounded-lg">
-                                    <div class="flex-shrink-0">
-                                        <svg class="h-6 w-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
-                                        </svg>
-                                    </div>
-                                    <div class="ml-4">
-                                        <p class="text-sm font-medium text-gray-900">
-                                            Audit completed by {{ $audit->auditor->name }}
-                                        </p>
-                                        <p class="text-sm text-gray-500">
-                                            {{ $audit->created_at->diffForHumans() }}
-                                        </p>
-                                    </div>
-                                </div>
-                            @endforeach
-                        @elseif($user->role === 'auditor' && isset($stats['recent_audits']))
-                            @foreach($stats['recent_audits'] as $audit)
-                                <div class="flex items-center p-4 bg-gray-50 rounded-lg">
-                                    <div class="flex-shrink-0">
-                                        <svg class="h-6 w-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
-                                        </svg>
-                                    </div>
-                                    <div class="ml-4">
-                                        <p class="text-sm font-medium text-gray-900">
-                                            Completed audit for {{ $audit->asset->name }}
-                                        </p>
-                                        <p class="text-sm text-gray-500">
-                                            {{ $audit->created_at->diffForHumans() }}
-                                        </p>
-                                    </div>
-                                </div>
-                            @endforeach
-                        @else
-                            <p class="text-gray-500 text-sm">No recent activity to display.</p>
-                        @endif
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>

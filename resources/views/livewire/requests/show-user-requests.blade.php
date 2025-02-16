@@ -40,7 +40,7 @@
         <div class="bg-white rounded-lg shadow-sm mb-6 border border-gray-100">
             <div class="border-b border-gray-200">
                 <nav class="-mb-px flex space-x-8 px-6" aria-label="Tabs">
-                    <button wire:click="$set('activeTab', 'assets')"
+                    <button wire:click="setActiveTab('assets')"
                             class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm
                                 {{ $activeTab === 'assets'
                                     ? 'border-emerald-500 text-emerald-600'
@@ -49,7 +49,7 @@
                         <i data-lucide="box" class="w-4 h-4 inline-block mr-2"></i>
                         Assigned Assets
                     </button>
-                    <button wire:click="$set('activeTab', 'requests')"
+                    <button wire:click="setActiveTab('requests')"
                             class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm
                                 {{ $activeTab === 'requests'
                                     ? 'border-emerald-500 text-emerald-600'

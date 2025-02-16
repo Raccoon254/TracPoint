@@ -10,3 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 window.createLucideIcons = createIcons; // Ensure icons refresh after Livewire updates
+
+document.addEventListener('livewire:init', () => {
+    lucide.createIcons({icons});
+    window.createLucideIcons({icons});
+});
