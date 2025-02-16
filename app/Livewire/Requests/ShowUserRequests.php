@@ -13,7 +13,7 @@ class ShowUserRequests extends Component
 {
     use WithPagination;
 
-    public $activeTab = 'requests';
+    public $activeTab = 'assets';
     public $showReturnModal = false;
     public $selectedAsset = null;
     public $returnNotes = '';

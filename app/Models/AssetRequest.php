@@ -57,4 +57,10 @@ class AssetRequest extends Model
     {
         return $this->belongsTo(AssetCategory::class, 'category_id');
     }
+
+    // The asset being requested.
+    public function asset(): BelongsTo
+    {
+        return $this->belongsTo(Asset::class);
+    }
 }
