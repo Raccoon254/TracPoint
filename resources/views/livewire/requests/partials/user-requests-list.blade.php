@@ -13,7 +13,9 @@
                     <div class="flex items-center space-x-4">
                         <div class="flex-shrink-0">
                             <div class="w-12 h-12 rounded-lg bg-emerald-100 flex items-center justify-center">
-                                <i data-lucide="box" class="w-6 h-6 text-emerald-600"></i>
+                                <img src="{{  Storage::url($request->asset->assetImages->first()->image_path) }}"
+                                     alt="{{ $request->asset->name }}"
+                                     class="w-10 h-10 object-cover rounded-lg">
                             </div>
                         </div>
 
