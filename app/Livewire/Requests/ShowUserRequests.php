@@ -4,6 +4,8 @@ namespace App\Livewire\Requests;
 
 use App\Models\Asset;
 use App\Models\AssetRequest;
+use App\Models\Notification;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -57,13 +59,13 @@ class ShowUserRequests extends Component
             ->paginate(10);
     }
 
-    public function initiateReturn($assetId)
+    public function initiateReturn($assetId): void
     {
         $this->selectedAsset = Asset::findOrFail($assetId);
         $this->showReturnModal = true;
     }
 
-    public function returnAsset()
+    public function returnAsset(): void
     {
         $this->validate();
 
@@ -94,6 +96,48 @@ class ShowUserRequests extends Component
                     now()->format('Y-m-d H:i:s') . ": Asset returned by " . auth()->user()->name .
                     "\nReturn Notes: " . $this->returnNotes
             ]);
+
+            // Create notification for the user who returned the asset
+            Notification::create(
+                type: 'asset_returned',
+                notifiable: auth()->user(),
+                message: "You have successfully returned {$this->selectedAsset->name}.",
+                data: [
+                    'asset_id' => $this->selectedAsset->id,
+                    'asset_name' => $this->selectedAsset->name,
+                    'asset_code' => $this->selectedAsset->asset_code,
+                    'return_condition' => $this->returnCondition,
+                    'return_notes' => $this->returnNotes,
+                ],
+                link: route('my-assets'),
+                fromUser: auth()->user()
+            );
+
+            // Notify organization admins
+            $admins = User::where('organization_id', $this->selectedAsset->organization_id)
+                ->whereIn('role', ['admin', 'super_admin'])
+                ->where('id', '!=', auth()->id()) // Don't notify the user who returned the asset if they're an admin
+                ->get();
+
+            foreach ($admins as $admin) {
+                Notification::create(
+                    type: 'admin_asset_returned',
+                    notifiable: $admin,
+                    message: "{$this->selectedAsset->name} has been returned by " . auth()->user()->name,
+                    data: [
+                        'asset_id' => $this->selectedAsset->id,
+                        'asset_name' => $this->selectedAsset->name,
+                        'asset_code' => $this->selectedAsset->asset_code,
+                        'user_id' => auth()->id(),
+                        'user_name' => auth()->user()->name,
+                        'return_condition' => $this->returnCondition,
+                        'return_notes' => $this->returnNotes,
+                        'department' => $this->selectedAsset->department?->name,
+                    ],
+                    link: route('assets.show', $this->selectedAsset),
+                    fromUser: auth()->user()
+                );
+            }
         });
 
         $this->reset(['showReturnModal', 'selectedAsset', 'returnNotes', 'returnCondition']);
