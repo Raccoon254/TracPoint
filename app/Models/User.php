@@ -85,4 +85,29 @@ class User extends Authenticatable
     {
         return $this->hasMany(Audit::class, 'auditor_id');
     }
+
+    public function isSuperAdmin(): bool
+    {
+        return $this->role === 'super_admin';
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isAuditor(): bool
+    {
+        return $this->role === 'auditor';
+    }
+
+    public function isUser(): bool
+    {
+        return $this->role === 'user';
+    }
+
+    public function hasAdminAccess(): bool
+    {
+        return in_array($this->role, ['super_admin', 'admin']);
+    }
 }
