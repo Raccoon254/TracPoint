@@ -35,6 +35,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('users', \App\Livewire\Users\ViewAll::class)->name('users.index');
     Route::get('users/{user}', ShowUser::class)->name('users.show');
 
+    Route::get('maintenance', \App\Livewire\maintenance\Index::class)->name('maintenance.index');
+    Route::get('departments', \App\Livewire\departments\Index::class)->name('departments.index');
+    Route::get('audits', \App\Livewire\audits\Index::class)->name('audits.index');
+    Route::get('reports', \App\Livewire\reports\Index::class)->name('reports.index');
+    Route::get('settings', \App\Livewire\settings\Index::class)->name('settings.index');
 });
 
 require __DIR__.'/auth.php';
