@@ -40,6 +40,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('audits', \App\Livewire\audits\Index::class)->name('audits.index');
     Route::get('reports', \App\Livewire\reports\Index::class)->name('reports.index');
     Route::get('settings', \App\Livewire\settings\Index::class)->name('settings.index');
+
+    // Notifications
+    Route::get('notifications', \App\Livewire\Notifications\ShowAll::class)->name('notifications.index');
 });
 
 require __DIR__.'/auth.php';
