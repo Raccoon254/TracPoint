@@ -30,6 +30,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('requests', \App\Livewire\Requests\ShowAll::class)->name('requests.index');
     Route::get('user/requests', \App\Livewire\Requests\ShowUserRequests::class)->name('user.requests');
     Route::get('requests/create', \App\Livewire\Requests\Create::class)->name('requests.create');
+    Route::get('requests/{request}', \App\Livewire\Requests\Show::class)->name('requests.show');
 
     Route::get('categories', CategoriesIndex::class)->name('categories.index');
 

@@ -5,6 +5,7 @@ namespace App\Livewire\Requests;
 use App\Models\AssetRequest;
 use App\Models\Asset;
 use App\Models\AssetCategory;
+use App\Models\Notification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -96,6 +97,7 @@ class ShowAll extends Component
         // Start database transaction
         DB::transaction(function () {
             $asset = Asset::findOrFail($this->selectedAsset);
+            $requester = $this->currentRequest->requester;
 
             // Create an audit record for this change
             Audit::create([
@@ -127,6 +129,43 @@ class ShowAll extends Component
                 'notes' => ($this->currentRequest->notes ? $this->currentRequest->notes . "\n" : '') .
                     now()->format('Y-m-d H:i:s') . ": Asset {$asset->asset_code} assigned"
             ]);
+
+            // Notify requester
+            Notification::create(
+                type: 'request_fulfilled',
+                notifiable: $requester,
+                message: "Your request for {$asset->name} has been fulfilled.",
+                data: [
+                    'request_id' => $this->currentRequest->id,
+                    'asset_id' => $asset->id,
+                    'asset_name' => $asset->name,
+                    'asset_code' => $asset->asset_code,
+                    'assigned_date' => now()->format('Y-m-d'),
+                    'expected_return_date' => $this->currentRequest->required_until,
+                ],
+                link: route('my-assets'),
+                fromUser: auth()->user()
+            );
+
+            // Notify department manager
+            if ($requester->department?->manager_id) {
+                Notification::create(
+                    type: 'manager_asset_assigned',
+                    notifiable: $requester->department->manager,
+                    message: "Asset {$asset->name} has been assigned to {$requester->name}",
+                    data: [
+                        'request_id' => $this->currentRequest->id,
+                        'asset_id' => $asset->id,
+                        'asset_name' => $asset->name,
+                        'asset_code' => $asset->asset_code,
+                        'user_id' => $requester->id,
+                        'user_name' => $requester->name,
+                        'department' => $requester->department->name,
+                    ],
+                    link: route('assets.show', $asset),
+                    fromUser: auth()->user()
+                );
+            }
         });
 
         $this->showActionModal = false;
@@ -146,30 +185,29 @@ class ShowAll extends Component
                     now()->format('Y-m-d H:i:s') . ": Request approved by " . auth()->user()->name
             ]);
 
+            // Notify requester
+            Notification::create(
+                type: 'request_approved',
+                notifiable: $this->currentRequest->requester,
+                message: "Your request for {$this->currentRequest->category->name} has been approved.",
+                data: [
+                    'request_id' => $this->currentRequest->id,
+                    'category_name' => $this->currentRequest->category->name,
+                    'approved_by' => auth()->user()->name,
+                    'approved_date' => now()->format('Y-m-d'),
+                ],
+                link: route('requests.show', $this->currentRequest),
+                fromUser: auth()->user()
+            );
+
             // Load available assets
             $this->loadAvailableAssets();
 
             // Move to next step
             $this->currentStep = 2;
-
-            $this->dispatch('request-updated', 'Request approved successfully! Please select an asset to assign.');
         });
-    }
 
-    public function updatedCurrentRequest($value): void
-    {
-        if ($value && $value['status'] === 'approved') {
-            $this->loadAvailableAssets();
-        }
-    }
-
-    protected function loadAvailableAssets(): void
-    {
-        if ($this->currentRequest && $this->currentRequest->status === 'approved') {
-            $this->availableAssets = Asset::where('category_id', $this->currentRequest->category_id)
-                ->where('status', 'available')
-                ->get();
-        }
+        $this->dispatch('request-updated', 'Request approved successfully! Please select an asset to assign.');
     }
 
     public function rejectRequest(): void
@@ -189,10 +227,63 @@ class ShowAll extends Component
                     now()->format('Y-m-d H:i:s') . ": Request rejected by " . auth()->user()->name .
                     "\nReason: " . $this->rejectionNote
             ]);
+
+            // Notify requester
+            Notification::create(
+                type: 'request_rejected',
+                notifiable: $this->currentRequest->requester,
+                message: "Your request for {$this->currentRequest->category->name} has been rejected.",
+                data: [
+                    'request_id' => $this->currentRequest->id,
+                    'category_name' => $this->currentRequest->category->name,
+                    'rejected_by' => auth()->user()->name,
+                    'rejected_date' => now()->format('Y-m-d'),
+                    'rejection_reason' => $this->rejectionNote,
+                ],
+                link: route('requests.show', $this->currentRequest),
+                fromUser: auth()->user()
+            );
+
+            // Notify department manager
+            if ($this->currentRequest->requester->department?->manager_id) {
+                Notification::create(
+                    type: 'manager_request_rejected',
+                    notifiable: $this->currentRequest->requester->department->manager,
+                    message: "Asset request from {$this->currentRequest->requester->name} has been rejected.",
+                    data: [
+                        'request_id' => $this->currentRequest->id,
+                        'category_name' => $this->currentRequest->category->name,
+                        'user_id' => $this->currentRequest->requester->id,
+                        'user_name' => $this->currentRequest->requester->name,
+                        'rejected_by' => auth()->user()->name,
+                        'rejected_date' => now()->format('Y-m-d'),
+                        'rejection_reason' => $this->rejectionNote,
+                        'department' => $this->currentRequest->requester->department->name,
+                    ],
+                    link: route('requests.show', $this->currentRequest),
+                    fromUser: auth()->user()
+                );
+            }
         });
 
         $this->showActionModal = false;
         $this->dispatch('request-updated', 'Request rejected successfully!');
+    }
+
+    public function updatedCurrentRequest($value): void
+    {
+        if ($value && $value['status'] === 'approved') {
+            $this->loadAvailableAssets();
+        }
+    }
+
+    protected function loadAvailableAssets(): void
+    {
+        if ($this->currentRequest && $this->currentRequest->status === 'approved') {
+            $this->availableAssets = Asset::where('category_id', $this->currentRequest->category_id)
+                ->where('status', 'available')
+                ->get();
+        }
     }
 
     public function resetModal(): void
