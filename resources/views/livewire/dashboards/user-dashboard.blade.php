@@ -111,8 +111,12 @@
                         </div>
                     </div>
                 @empty
-                    <div class="text-center text-gray-500 py-4">
-                        <p>No assets currently assigned to you.</p>
+                    <div>
+                        @include('partials.empty', [
+                            'title' => 'You have no assigned assets',
+                            'message' => 'Assets assigned to you will appear here.',
+                            'icon' => 'asset'
+                        ])
                     </div>
                 @endforelse
             </div>
@@ -144,8 +148,12 @@
                         </div>
                     </div>
                 @empty
-                    <div class="text-center text-gray-500 py-4">
-                        <p>No upcoming maintenance scheduled.</p>
+                    <div>
+                        @include('partials.empty', [
+                            'title' => 'No maintenance schedule',
+                            'message' => 'Your maintenance schedule will appear here.',
+                            'icon' => 'tool'
+                        ])
                     </div>
                 @endforelse
             </div>
@@ -182,8 +190,12 @@
                         </div>
                     </div>
                 @empty
-                    <div class="text-center text-gray-500 py-4">
-                        <p>No recent activities to display.</p>
+                    <div>
+                        @include('partials.empty', [
+                            'title' => 'No recent activities',
+                            'message' => 'Your recent activities will appear here.',
+                            'icon' => 'activity'
+                        ])
                     </div>
                 @endforelse
             </div>
@@ -216,8 +228,12 @@
                         </div>
                     </div>
                 @empty
-                    <div class="text-center text-gray-500 py-4">
-                        <p>No pending requests.</p>
+                    <div>
+                        @include('partials.empty', [
+                            'title' => 'No pending requests',
+                            'message' => 'Your pending requests will appear here.',
+                            'icon' => 'user'
+                        ])
                     </div>
                 @endforelse
             </div>
@@ -258,7 +274,11 @@
                 </div>
             @else
                 <div class="flex items-center justify-center h-full">
-                    <p class="text-gray-500">No assets currently assigned</p>
+                    @include('partials.empty', [
+                        'title' => 'No assets by category',
+                        'message' => 'Assets by category will appear here.',
+                        'icon' => 'category'
+                    ])
                 </div>
             @endif
         </div>
