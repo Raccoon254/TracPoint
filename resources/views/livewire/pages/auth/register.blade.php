@@ -86,7 +86,7 @@ new #[Layout('layouts.guest')] class extends Component {
             'name'            => $this->name,
             'email'           => $this->email,
             'password'        => Hash::make($this->password),
-            'role'            => 'admin',
+            'role'            => getRole(),
             'organization_id' => $organization->id,
         ]);
 
@@ -95,6 +95,16 @@ new #[Layout('layouts.guest')] class extends Component {
         Auth::login($user);
 
         $this->redirect(route('dashboard', absolute: false), navigate: true);
+    }
+
+    public function getRole(): string
+    {
+        $users = User::where('organization_id', $this->organization_id)->get();
+        if ($users->count() === 0) {
+            session()->flash('You are the first user in this organization. You will be assigned the admin role.');
+            return 'admin';
+        }
+        return 'user';
     }
 };
 
