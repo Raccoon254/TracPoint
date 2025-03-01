@@ -8,7 +8,6 @@ use App\Livewire\Assets\Show;
 use App\Livewire\Assets\ViewAll;
 use App\Livewire\Categories\CategoriesIndex;
 use App\Livewire\Dashboards\MainDashboard;
-use App\Livewire\Test\Test;
 use App\Livewire\Users\ShowUser;
 use Illuminate\Support\Facades\Route;
 
@@ -17,8 +16,6 @@ Route::view('/', 'welcome');
 Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
-
-Route::get('test',Test::class);
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', MainDashboard::class)->name('dashboard');
