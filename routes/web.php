@@ -43,6 +43,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('reports', \App\Livewire\reports\Index::class)->name('reports.index');
     Route::get('settings', \App\Livewire\settings\Index::class)->name('settings.index');
 
+    Route::get('audits/create', \App\Livewire\audits\Create::class)->name('audits.create');
+
     // Notifications
     Route::get('notifications', \App\Livewire\Notifications\ShowAll::class)->name('notifications.index');
 });
